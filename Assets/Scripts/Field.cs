@@ -65,6 +65,7 @@ public class Field : MonoBehaviour
     }
     private bool ShouldColorWhite(float x, float z)
     {
+        if (x == 31) return true; // Middle center line
         return false;
     }
     public void Explode(Vector3 explosionPosition, float range)
