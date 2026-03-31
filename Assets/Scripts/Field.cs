@@ -46,9 +46,9 @@ public class Field : MonoBehaviour
                     cube.transform.localScale = new Vector3(1 / transform.localScale.x, height, 1 / transform.localScale.z);
                     cube.transform.localScale *= _sizeMultiplier;
                     var cubeRenderer = cube.GetComponent<Renderer>();
-                    if (ShouldColorWhite(x, z))
+                    if (y == 0 && ShouldColorWhite(x, z)) // If ground level and should be white, color white
                         cubeRenderer.material = _whiteLineMaterial;
-                    else if (y == 0)
+                    else if (y == 0) // else make grass
                         cubeRenderer.material = _grassMaterial;
                     else
                         cubeRenderer.material = _dirtMaterial;
@@ -65,7 +65,34 @@ public class Field : MonoBehaviour
     }
     private bool ShouldColorWhite(float x, float z)
     {
+        /// Outer lines
+        if (x >= 4 && x <= 57)
+        {
+            if (z == 0 || z == 29) return true;
+        }
         if (x == 31) return true; // Middle center line
+
+        /// Goals left
+        if (x == 4) return true; // Left goal line
+        if (x == 1)
+        {
+            if (z >= 10 && z <= 19) return true; // goal left side, left side ring
+        }
+        if (z == 10 || z == 19)
+        {
+            if (x >= 1 && x <= 4) return true; // goal left side, top bottom side ring
+        }
+            
+        /// Goal right
+        if (x == 57) return true; // Right goal line
+        if (x == 60)
+        {
+            if (z >= 10 && z <= 19) return true; // goal right side, right side ring
+        }
+        if (z == 10 || z == 19)
+        {
+            if (x >= 57 && x <= 60) return true; // goal right side, top bottom side ring
+        }
         return false;
     }
     public void Explode(Vector3 explosionPosition, float range)
