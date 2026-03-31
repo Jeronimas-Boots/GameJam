@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 3522282138147046929}
   - component: {fileID: 5446687923405891633}
   m_Layer: 0
-  m_Name: HomeScore (1)
+  m_Name: GuestScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
