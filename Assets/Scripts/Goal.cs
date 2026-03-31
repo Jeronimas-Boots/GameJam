@@ -11,7 +11,7 @@ public class Goal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Ball")
+        if(other.tag == "Ball" && _scored == false)
         {
             if(_team == 1)
             {
@@ -21,6 +21,8 @@ public class Goal : MonoBehaviour
             {
                 _displayScores.Player2Scored();
             }
+
+            _scored = true;
         }
     }
 
