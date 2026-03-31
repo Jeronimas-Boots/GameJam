@@ -2,8 +2,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using System.Linq;
 
-
+[System.Serializable]
+public class ObjectSlot
+{
+    public GameObject gameObject;
+    public Transform transform;
+}
 public class CharacterController : MonoBehaviour
 {
     private Rigidbody _rb;
@@ -14,6 +21,17 @@ public class CharacterController : MonoBehaviour
     [Range(.5f, 100.0f)] public float movementSpeed;
     [Range(.5f, 200.0f)] public float maxSpeed;
     [Range(.5f, 10000.0f)] public float jumpForce;
+
+
+
+    [Header("Grabbing")]
+    public float grabbingRange = 1.0f;
+    public LayerMask grabbableLayerMask;
+    public float ThrowingForce = 10.0f;
+
+    public InputActionReference leftGrab; 
+
+    public List<ObjectSlot> slots;
 
     [HideInInspector]
     public bool isGrounded;
@@ -51,7 +69,7 @@ public class CharacterController : MonoBehaviour
     }
     private void Update()
     {
-        if (_justJumped)
+        if (_justJumped && _field != null)
         {
             _jumpedTimeAgo += Time.deltaTime;
             if (_jumpedTimeAgo > 0.2f && isGrounded)
@@ -63,6 +81,11 @@ public class CharacterController : MonoBehaviour
         if (_rb != null) {
             _rb.transform.rotation = lookAtDirection;
         }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1f, 0f, 0f, .3f);
+        Gizmos.DrawSphere(transform.position, grabbingRange);
     }
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -88,9 +111,54 @@ public class CharacterController : MonoBehaviour
         lookAtDirection = Quaternion.LookRotation(new Vector3(input.x, 0, input.y),Vector3.up);
 
     }
-    public void OnThrowProjectile(InputAction.CallbackContext context)
+    public void OnGrabObject(InputAction.CallbackContext context)
     {
-        Debug.Log("Throwing");
+        if (!context.started) return;
+        int index = context.action.name == leftGrab.action.name ? 1 : 0;
 
+        if(index < slots.Count)
+        {
+            if (slots[index].gameObject == null)
+            {
+                GrabNearestRigidBodyObject(index);
+            }
+            else
+            {
+                ThrowObject(index);
+            }
+        }
+    }
+
+    private void ThrowObject(int handIndex) 
+    {
+        var obj = slots[handIndex].gameObject;
+
+        obj.transform.SetParent(null, true);
+        var rb = obj.gameObject.GetComponent<Rigidbody>();
+        var cl = obj.gameObject.GetComponent<Collider>();
+
+        cl.enabled = true;
+        rb.isKinematic = false;
+        rb.AddForce(gameObject.transform.forward * ThrowingForce, ForceMode.Force);
+        slots[handIndex].gameObject = null;
+
+    }
+    private void GrabNearestRigidBodyObject(int handIndex)
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, grabbingRange, grabbableLayerMask);
+        foreach (var hit in hits)
+        {
+            var rb = hit.gameObject.GetComponent<Rigidbody>();
+            var cl = hit.gameObject.GetComponent<Collider>();
+            if (rb != null && cl != null)
+            {
+                hit.gameObject.transform.position = slots[handIndex].transform.position;
+                hit.gameObject.transform.SetParent(slots[handIndex].transform, true);
+                slots[handIndex].gameObject = hit.gameObject;
+                cl.enabled = false;
+                rb.isKinematic = true;
+                return;
+            }
+        }
     }
 }
