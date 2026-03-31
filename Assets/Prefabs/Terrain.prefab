@@ -66,6 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db046d658351a64d8c99dccecccc57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Field
-  timertemp: 0
-  maxtimetoregenerate: 1
+  _dirtMaterial: {fileID: 2100000, guid: 32e8ffee551fad94ab3827e31b659d81, type: 2}
+  _grassMaterial: {fileID: 2100000, guid: 82e8afd15bed3754d819cf5e4af4a0a7, type: 2}
   _sizeMultiplier: 0.4
