@@ -46,9 +46,9 @@ public class Field : MonoBehaviour
                     cube.transform.localScale = new Vector3(1 / transform.localScale.x, height, 1 / transform.localScale.z);
                     cube.transform.localScale *= _sizeMultiplier;
                     var cubeRenderer = cube.GetComponent<Renderer>();
-                    if (ShouldColorWhite(x, z))
+                    if (y == 0 && ShouldColorWhite(x, z)) // If ground level and should be white, color white
                         cubeRenderer.material = _whiteLineMaterial;
-                    else if (y == 0)
+                    else if (y == 0) // else make grass
                         cubeRenderer.material = _grassMaterial;
                     else
                         cubeRenderer.material = _dirtMaterial;
@@ -65,7 +65,74 @@ public class Field : MonoBehaviour
     }
     private bool ShouldColorWhite(float x, float z)
     {
+        /// Outer lines
+        if (x >= 4 && x <= 57)
+        {
+            if (z == 0 || z == 29) return true; // Outer lines
+        }
+
         if (x == 31) return true; // Middle center line
+
+        /// Goal left
+        if (x == 4) return true; // Left goal line
+        if (x == 1)
+        {
+            if (z >= 10 && z <= 19) return true; // left side ring
+        }
+        if (z == 10 || z == 19)
+        {
+            if (x >= 1 && x <= 4) return true; // top bottom side ring
+        }
+        if (z == 8 || z == 21)
+        {
+            if (x >= 4 && x <= 9)  return true; // inner ring top bottom
+        }
+        if (x == 9)
+        {
+            if (z >= 8 && z <= 21) return true; // inner ring right
+        }
+
+        /// Goal right
+        if (x == 57) return true; // Right goal line
+        if (x == 60)
+        {
+            if (z >= 10 && z <= 19) return true; // goal right side, right side ring
+        }
+        if (z == 10 || z == 19)
+        {
+            if (x >= 57 && x <= 60) return true; // goal right side, top bottom side ring
+        }
+        if (z == 8 || z == 21)
+        {
+            if (x >= 52 && x <= 57)  return true; // inner ring top bottom
+        }
+        if (x == 52)
+        {
+            if (z >= 8 && z <= 21) return true; // inner ring right
+        }
+
+
+        /// Inner circle
+        /// x 27 row  z13 - 16
+        /// x 35 row  z13 - 16
+        if (x == 27 || x == 35)
+        {
+            if (z >= 13 && z <= 16) return true;
+        }
+        /// z 11 row  x29 - 33
+        /// z 18 row  x29 - 33
+        if (z == 11 || z == 18)
+        {
+            if (x >= 29 && x <= 33) return true;
+        }
+        /// x 28 z 17
+        /// x 28 z 12
+        /// x 34 z 17
+        /// x 34 z 12
+        if (x == 28 || x == 34)
+        {
+            if (z == 12 || z == 17) return true;
+        }
         return false;
     }
     public void Explode(Vector3 explosionPosition, float range)

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class DisplayScores : MonoBehaviour
 {
-    [SerializeField] GameObject _ScoreLabel;
+    [SerializeField] TextMeshPro _HomeScore;
+    [SerializeField] TextMeshPro _GuestScore;
 
     private int score1 = 0;
     private int score2 = 0;
@@ -22,6 +23,13 @@ public class DisplayScores : MonoBehaviour
 
     private void UpdateScore()
     {
-        _ScoreLabel.GetComponent<TextMeshProUGUI>().text = score1 + " - " + score2;
+        string score1String = score1.ToString();
+        string score2String = score2.ToString();
+
+        if (score1 < 10) score1String = "0" + score1String;
+        if (score2 < 10) score2String = "0" + score2String;
+
+        _HomeScore.text = score1String;
+        _GuestScore.text = score2String;
     }
 }
