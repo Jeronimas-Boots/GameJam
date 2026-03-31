@@ -276,8 +276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c4cb80754d8e841b4ed6babb3e580e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisplayScores
-  _HomeScore: {fileID: 1099811549}
-  _GuestScore: {fileID: 1099811548}
+  _HomeScore: {fileID: 1099811554}
+  _GuestScore: {fileID: 1099811551}
 --- !u!4 &100483165
 Transform:
   m_ObjectHideFlags: 0
@@ -1258,16 +1258,28 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 80b0286847d00cb4fa94e7af3310066f, type: 3}
---- !u!1 &1099811548 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3076488724919207530, guid: 80b0286847d00cb4fa94e7af3310066f, type: 3}
+--- !u!114 &1099811551 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5446687923405891633, guid: 80b0286847d00cb4fa94e7af3310066f, type: 3}
   m_PrefabInstance: {fileID: 1099811547}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1099811549 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2438065305302351510, guid: 80b0286847d00cb4fa94e7af3310066f, type: 3}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshPro
+--- !u!114 &1099811554 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3757062553390735309, guid: 80b0286847d00cb4fa94e7af3310066f, type: 3}
   m_PrefabInstance: {fileID: 1099811547}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshPro
 --- !u!1 &1135653198
 GameObject:
   m_ObjectHideFlags: 0
