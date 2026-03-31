@@ -5,6 +5,7 @@ public class Goal : MonoBehaviour
     [SerializeField] private DisplayScores _displayScores;
     [SerializeField] private int _team;
     [SerializeField] private GameObject _ball;
+    [SerializeField] private AudioClip _goalSound;
 
     private bool _scored = false;
     private float _time = 0f;
@@ -22,6 +23,7 @@ public class Goal : MonoBehaviour
                 _displayScores.Player2Scored();
             }
 
+            SoundFXManager.Instance.PlaySoundFXClip(_goalSound, transform, 1f);
             _scored = true;
         }
     }
