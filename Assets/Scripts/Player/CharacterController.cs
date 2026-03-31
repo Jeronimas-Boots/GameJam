@@ -15,21 +15,31 @@ public class CharacterController : MonoBehaviour
     [Range(.5f, 200.0f)] public float maxSpeed;
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        if(!(rb = transform.GetComponent<Rigidbody>()))
+            rb = transform.AddComponent<Rigidbody>();
+
         rb.isKinematic = false;
         rb.useGravity = true;
-
     }
     private void FixedUpdate()
     {
-        rb.AddForce(m_movementDirection * movementSpeed, ForceMode.Acceleration);
-        Vector3 vel = rb.linearVelocity;
-        Vector3 horizontal = new Vector3(vel.x, 0, vel.z);
-
-        if (horizontal.magnitude > maxSpeed)
+        if (rb != null)
         {
-            horizontal = horizontal.normalized * maxSpeed;
-            rb.linearVelocity = new Vector3(horizontal.x, vel.y, horizontal.z);
+            rb.AddForce(m_movementDirection * movementSpeed, ForceMode.Acceleration);
+            Vector3 vel = rb.linearVelocity;
+            Vector3 horizontal = new Vector3(vel.x, 0, vel.z);
+
+            if (horizontal.magnitude > maxSpeed)
+            {
+                horizontal = horizontal.normalized * maxSpeed;
+                rb.linearVelocity = new Vector3(horizontal.x, vel.y, horizontal.z);
+            }
+        }
+    }
+    private void Update()
+    {
+        if (rb != null) {
+            rb.transform.rotation = m_lookAtDirection;
         }
     }
     public void OnMove(InputAction.CallbackContext context)
@@ -41,7 +51,7 @@ public class CharacterController : MonoBehaviour
     {
         var input = context.ReadValue<Vector2>();
         m_lookAtDirection = Quaternion.LookRotation(new Vector3(input.x, 0, input.y),Vector3.up);
-        rb.transform.rotation = m_lookAtDirection;
+
     }
     public void OnThrowProjectile(InputAction.CallbackContext context)
     {

@@ -9,8 +9,11 @@ public class PlayerSpawner : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
-        playerInput.transform.position = transforms[playerCount].position;
-        playerInput.transform.rotation = transforms[playerCount].rotation;
-        playerCount++;
+        if (playerCount < transforms.Length)
+        {
+            playerInput.transform.position = transforms[playerCount].position;
+            playerInput.transform.rotation = transforms[playerCount].rotation;
+            playerCount++;
+        }
     }
 }
