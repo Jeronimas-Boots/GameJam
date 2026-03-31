@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
+    [SerializeField] private Material _whiteLineMaterial;
     [SerializeField] private Material _dirtMaterial;
     [SerializeField] private Material _grassMaterial;
     [SerializeField]
@@ -45,7 +46,9 @@ public class Field : MonoBehaviour
                     cube.transform.localScale = new Vector3(1 / transform.localScale.x, height, 1 / transform.localScale.z);
                     cube.transform.localScale *= _sizeMultiplier;
                     var cubeRenderer = cube.GetComponent<Renderer>();
-                    if (y == 0)
+                    if (ShouldColorWhite(x, z))
+                        cubeRenderer.material = _whiteLineMaterial;
+                    else if (y == 0)
                         cubeRenderer.material = _grassMaterial;
                     else
                         cubeRenderer.material = _dirtMaterial;
@@ -59,6 +62,10 @@ public class Field : MonoBehaviour
                 }
             }
         }
+    }
+    private bool ShouldColorWhite(float x, float z)
+    {
+        return false;
     }
     public void Explode(Vector3 explosionPosition, float range)
     {
