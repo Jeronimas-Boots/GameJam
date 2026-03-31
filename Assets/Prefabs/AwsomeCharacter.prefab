@@ -5703,7 +5703,7 @@ GameObject:
   m_Layer: 6
   m_Name: Hips
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -5950,7 +5950,18 @@ MonoBehaviour:
   lookAtDirection: {x: 0, y: 0, z: 0, w: 1}
   movementSpeed: 69.5
   maxSpeed: 152.6
-  jumpForce: 6023
+  jumpForce: 6868
+  grabbingRange: 1
+  grabbableLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  ThrowingForce: 1500
+  leftGrab: {fileID: -9022218869052967256, guid: f5a6bf9f9fd10814d9f03c01120811e1, type: 3}
+  slots:
+  - gameObject: {fileID: 0}
+    transform: {fileID: 5083532069688062305}
+  - gameObject: {fileID: 0}
+    transform: {fileID: 8311959672836633216}
   isGrounded: 0
   animator: {fileID: 8478317786468287041}
 --- !u!114 &5580186944908643273
@@ -6010,22 +6021,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6809158565998310221}
         m_TargetAssemblyTypeName: CharacterController, Assembly-CSharp
-        m_MethodName: OnThrowProjectile
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: de0cf88c-459a-4c53-9bb1-5be03bb51b41
-    m_ActionName: 'Player/ThrowProjectile[/XInputControllerWindows1/buttonSouth]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6809158565998310221}
-        m_TargetAssemblyTypeName: CharacterController, Assembly-CSharp
         m_MethodName: OnRotate
         m_Mode: 0
         m_Arguments:
@@ -6054,6 +6049,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f085ce06-650b-41c6-a042-126e0faa9d00
     m_ActionName: 'Player/Jump[/XInputControllerWindows1/buttonWest,/XInputControllerWindows1/leftTrigger]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6809158565998310221}
+        m_TargetAssemblyTypeName: CharacterController, Assembly-CSharp
+        m_MethodName: OnGrabObject
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 06dc6571-ea02-451b-9d1f-4eb3fa40a20d
+    m_ActionName: 'Player/GrabObjectLeft[/XInputControllerWindows1/leftTrigger]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6809158565998310221}
+        m_TargetAssemblyTypeName: CharacterController, Assembly-CSharp
+        m_MethodName: OnGrabObject
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 26c3d2eb-0c48-4f43-9290-6a2a1f85b9a3
+    m_ActionName: 'Player/GrabObjectRight[/XInputControllerWindows1/rightTrigger]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

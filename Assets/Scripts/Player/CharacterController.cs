@@ -69,7 +69,7 @@ public class CharacterController : MonoBehaviour
     }
     private void Update()
     {
-        if (_justJumped)
+        if (_justJumped && _field != null)
         {
             _jumpedTimeAgo += Time.deltaTime;
             if (_jumpedTimeAgo > 0.2f && isGrounded)
@@ -114,7 +114,7 @@ public class CharacterController : MonoBehaviour
     public void OnGrabObject(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        int index = context.action.name == leftGrab.action.name ? 0 : 1;
+        int index = context.action.name == leftGrab.action.name ? 1 : 0;
 
         if(index < slots.Count)
         {
