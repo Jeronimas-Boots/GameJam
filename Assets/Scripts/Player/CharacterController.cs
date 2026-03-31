@@ -14,6 +14,9 @@ public class CharacterController : MonoBehaviour
     [Range(.5f, 100.0f)] public float movementSpeed;
     [Range(.5f, 200.0f)] public float maxSpeed;
     [Range(.5f, 10000.0f)] public float jumpForce;
+
+    [HideInInspector]
+    public bool isGrounded;
     private void Start()
     {
         if(!(rb = transform.GetComponent<Rigidbody>()))
@@ -50,7 +53,11 @@ public class CharacterController : MonoBehaviour
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Force);
+        if (isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Force);
+            isGrounded = false;
+        }
     }
     public void OnRotate(InputAction.CallbackContext context)
     {
