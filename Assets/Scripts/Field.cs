@@ -45,7 +45,7 @@ public class Field : MonoBehaviour
                     if (y == 0)
                         cube.GetComponent<Renderer>().material.color = new Color(0.10f, 0.75f, 0.10f);
                     else
-                        cube.GetComponent<Renderer>().material.color = new Color(0.1f, 0.75f, 0.75f);
+                        cube.GetComponent<Renderer>().material.color = new Color(0.65f, 0.1f, 0.1f);
 
                     cube.transform.localPosition = new Vector3(
                         x * cube.transform.localScale.x - transform.localScale.x / 2 * cube.transform.localScale.x / _sizeMultiplier + cube.transform.localScale.x / 2,
@@ -63,7 +63,7 @@ public class Field : MonoBehaviour
         {
             var objPos = obj.transform.position;
             objPos.y *= 2;
-            if ((objPos + explosionPosition).magnitude <= range)
+            if ((objPos - explosionPosition).magnitude <= range)
             {
                 obj.SetActive(false);
             }   
