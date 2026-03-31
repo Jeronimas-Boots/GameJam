@@ -18,6 +18,9 @@ public class CharacterController : MonoBehaviour
     [HideInInspector]
     public bool isGrounded;
 
+    [SerializeField]
+    private Animator animator;
+
 
     private Field _field;
     private bool _justJumped;
@@ -65,6 +68,9 @@ public class CharacterController : MonoBehaviour
     {
         var input = context.ReadValue<Vector2>();
         movementDirection = new Vector3(input.x ,0, input.y);
+
+        bool isWalking = input.sqrMagnitude > 0.01f;
+        animator.SetBool("isWalking", isWalking);
     }
     public void OnJump(InputAction.CallbackContext context)
     {
