@@ -13,11 +13,10 @@ public class ObjectSlot
 }
 public class CharacterController : MonoBehaviour
 {
-    private Rigidbody rb;
+    private Rigidbody _rb;
 
-    [Header("Movement")]
-    public Vector3 m_movementDirection = Vector3.zero;
-    public Quaternion m_lookAtDirection = Quaternion.identity;
+    public Vector3 movementDirection = Vector3.zero;
+    public Quaternion lookAtDirection = Quaternion.identity;
 
     [Range(.5f, 100.0f)] public float movementSpeed;
     [Range(.5f, 200.0f)] public float maxSpeed;
@@ -34,33 +33,53 @@ public class CharacterController : MonoBehaviour
 
     public List<ObjectSlot> slots;
 
+    [HideInInspector]
+    public bool isGrounded;
+
+    [SerializeField]
+    private Animator animator;
+
+
+    private Field _field;
+    private bool _justJumped;
+    private float _jumpedTimeAgo = 0f;
     private void Start()
     {
-        if(!(rb = transform.GetComponent<Rigidbody>()))
-            rb = transform.AddComponent<Rigidbody>();
+        _field = GameObject.FindAnyObjectByType<Field>();
+        if(!(_rb = transform.GetComponent<Rigidbody>()))
+            _rb = transform.AddComponent<Rigidbody>();
 
-        rb.isKinematic = false;
-        rb.useGravity = true;
+        _rb.isKinematic = false;
+        _rb.useGravity = true;
     }
     private void FixedUpdate()
     {
-        if (rb != null)
+        if (_rb != null)
         {
-            rb.AddForce(m_movementDirection * movementSpeed, ForceMode.Acceleration);
-            Vector3 vel = rb.linearVelocity;
+            _rb.AddForce(movementDirection * movementSpeed, ForceMode.Acceleration);
+            Vector3 vel = _rb.linearVelocity;
             Vector3 horizontal = new Vector3(vel.x, 0, vel.z);
 
             if (horizontal.magnitude > maxSpeed)
             {
                 horizontal = horizontal.normalized * maxSpeed;
-                rb.linearVelocity = new Vector3(horizontal.x, vel.y, horizontal.z);
+                _rb.linearVelocity = new Vector3(horizontal.x, vel.y, horizontal.z);
             }
         }
     }
     private void Update()
     {
-        if (rb != null) {
-            rb.transform.rotation = m_lookAtDirection;
+        if (_justJumped)
+        {
+            _jumpedTimeAgo += Time.deltaTime;
+            if (_jumpedTimeAgo > 0.2f && isGrounded)
+            {
+                _justJumped = false;
+                _field.Explode(transform.position, 1.5f);
+            }
+        }
+        if (_rb != null) {
+            _rb.transform.rotation = lookAtDirection;
         }
     }
     private void OnDrawGizmosSelected()
@@ -71,16 +90,25 @@ public class CharacterController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         var input = context.ReadValue<Vector2>();
-        m_movementDirection = new Vector3(input.x ,0, input.y);
+        movementDirection = new Vector3(input.x ,0, input.y);
+
+        bool isWalking = input.sqrMagnitude > 0.01f;
+        animator.SetBool("isWalking", isWalking);
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Force);
+        if (isGrounded)
+        {
+            _rb.AddForce(Vector3.up * jumpForce, ForceMode.Force);
+            isGrounded = false;
+            _justJumped = true;
+            _jumpedTimeAgo = 0f;
+        }
     }
     public void OnRotate(InputAction.CallbackContext context)
     {
         var input = context.ReadValue<Vector2>();
-        m_lookAtDirection = Quaternion.LookRotation(new Vector3(input.x, 0, input.y),Vector3.up);
+        lookAtDirection = Quaternion.LookRotation(new Vector3(input.x, 0, input.y),Vector3.up);
 
     }
     public void OnGrabObject(InputAction.CallbackContext context)
