@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5879242303268349706}
   m_Layer: 0
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,6 +78,12 @@ MonoBehaviour:
   m_lookAtDirection: {x: 0, y: 0, z: 0, w: 1}
   movementSpeed: 20.4
   maxSpeed: 200
+  jumpForce: 0.5
+  HoldingObjectSlot: {fileID: 0}
+  grabbingRange: 1
+  grabbableLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &-5879242303268349706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +169,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: edf1ae72-79ce-42d5-9553-3bbf1255defc
     m_ActionName: 'Player/Rotate[/XInputControllerWindows1/rightStick]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f085ce06-650b-41c6-a042-126e0faa9d00
+    m_ActionName: 'Player/Jump[/XInputControllerWindows1/buttonWest,/XInputControllerWindows1/leftTrigger]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
