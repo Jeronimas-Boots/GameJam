@@ -1,0 +1,86 @@
+{
+    "version": 1,
+    "name": "IAA_Player",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "cefcdbf5-6c4f-4b8d-8075-4a0fc357bb12",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "33a23604-a3b6-4d64-98e3-9272e42d496e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "edf1ae72-79ce-42d5-9553-3bbf1255defc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ThrowProjectile",
+                    "type": "Button",
+                    "id": "de0cf88c-459a-4c53-9bb1-5be03bb51b41",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "eaa237ff-1272-442d-8e5c-08a7a6b009df",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55d6b6fd-ff8b-49e1-a65e-a661adab3723",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrowProjectile",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e702473-a8eb-4a17-9938-4afb4669b836",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrowProjectile",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d702220-9b5d-4ecb-a606-1582ab73a76c",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
