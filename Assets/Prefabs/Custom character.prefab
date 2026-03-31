@@ -261,6 +261,7 @@ MonoBehaviour:
   m_lookAtDirection: {x: 0, y: 0, z: 0, w: 1}
   movementSpeed: 69.5
   maxSpeed: 152.6
+  jumpForce: 6023
 --- !u!114 &622339394603294007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,6 +347,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: edf1ae72-79ce-42d5-9553-3bbf1255defc
     m_ActionName: 'Player/Rotate[/XInputControllerWindows1/rightStick]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6020777312255021079}
+        m_TargetAssemblyTypeName: CharacterController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f085ce06-650b-41c6-a042-126e0faa9d00
+    m_ActionName: 'Player/Jump[/XInputControllerWindows1/buttonWest,/XInputControllerWindows1/leftTrigger]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

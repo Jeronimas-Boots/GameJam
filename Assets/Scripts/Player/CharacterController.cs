@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour
 
     [Range(.5f, 100.0f)] public float movementSpeed;
     [Range(.5f, 200.0f)] public float maxSpeed;
+    [Range(.5f, 10000.0f)] public float jumpForce;
     private void Start()
     {
         if(!(rb = transform.GetComponent<Rigidbody>()))
@@ -46,6 +47,10 @@ public class CharacterController : MonoBehaviour
     {
         var input = context.ReadValue<Vector2>();
         m_movementDirection = new Vector3(input.x ,0, input.y);
+    }
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Force);
     }
     public void OnRotate(InputAction.CallbackContext context)
     {
