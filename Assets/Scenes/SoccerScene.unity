@@ -3116,6 +3116,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 7712303311143741492, guid: 80b0286847d00cb4fa94e7af3310066f, type: 3}
+      propertyPath: m_text
+      value: Red
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268278194985790583, guid: 80b0286847d00cb4fa94e7af3310066f, type: 3}
+      propertyPath: m_text
+      value: Blue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3319,7 +3327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 006f4ba05709db947a26150dc365e026, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 006f4ba05709db947a26150dc365e026, type: 3}
       propertyPath: m_LocalScale.z
@@ -6440,7 +6448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 006f4ba05709db947a26150dc365e026, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 006f4ba05709db947a26150dc365e026, type: 3}
       propertyPath: m_LocalScale.z
