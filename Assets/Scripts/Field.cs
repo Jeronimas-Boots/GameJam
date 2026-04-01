@@ -135,8 +135,9 @@ public class Field : MonoBehaviour
         }
         return false;
     }
-    public void Explode(Vector3 explosionPosition, float range)
+    public bool Explode(Vector3 explosionPosition, float range)
     {
+        bool hasExplodedSomething = false;
         foreach (var obj in _field)
         {
             var objPos = obj.transform.position;
@@ -144,7 +145,9 @@ public class Field : MonoBehaviour
             if ((objPos - explosionPosition).magnitude <= range)
             {
                 obj.SetActive(false);
+                hasExplodedSomething = true;
             }   
         }
+        return hasExplodedSomething;
     }
 }
