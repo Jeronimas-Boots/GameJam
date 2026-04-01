@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (_PlayerSpawner.GetPlayerCount() == 2) return;
+        if (_PlayerSpawner.GetPlayerCount() < 2) return;
         if (_time >= 1) 
         {
             _time -= Time.deltaTime;

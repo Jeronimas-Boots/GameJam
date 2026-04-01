@@ -279,7 +279,7 @@ MonoBehaviour:
   _Score2Label: {fileID: 1099811551}
   _TimeLabel: {fileID: 790390094}
   _PlayerSpawner: {fileID: 900792168}
-  _time: 10
+  _time: 300
   _EndScreen: {fileID: 1821992033}
   _EndScore: {fileID: 1500095718}
   _WinnerText: {fileID: 865291985}
