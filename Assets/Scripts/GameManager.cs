@@ -1,13 +1,20 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
-public class DisplayScores : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshPro _Score1Label;
     [SerializeField] private TextMeshPro _Score2Label;
     [SerializeField] private TextMeshPro _TimeLabel;
     [SerializeField] private PlayerSpawner _PlayerSpawner;
-    [SerializeField] private float _time = 300;
+    
+    [SerializeField] private float _time = 10;
+
+    [SerializeField] private GameObject _EndScreen;
+    [SerializeField] private TextMeshProUGUI _EndScore;
+    [SerializeField] private TextMeshProUGUI _WinnerText;
 
 
     private float _minutes = 0;
@@ -39,7 +46,8 @@ public class DisplayScores : MonoBehaviour
 
     private void Update()
     {
-        if (_time > 0 && _PlayerSpawner.GetPlayerCount() == 2) 
+        if (_PlayerSpawner.GetPlayerCount() == 2) return;
+        if (_time >= 1) 
         {
             _time -= Time.deltaTime;
             _minutes = Mathf.Floor(_time / 60);
@@ -52,6 +60,32 @@ public class DisplayScores : MonoBehaviour
             else
             {
                 _TimeLabel.text = $"{_minutes}:{_seconds}";
+            }
+        }
+        else if(_EndScreen.activeSelf == false)
+        {
+            _EndScreen.SetActive(true);
+
+            if(_score1 < _score2)
+            {
+                _WinnerText.text = "Red Player Wins!";
+            }
+            else if (_score2 > _score1)
+            {
+                _WinnerText.text = "Blue Player Wins!";
+            }
+            else
+            {
+                _WinnerText.text = "It's a Tie!";
+            }
+
+            _EndScore.text = $"{_score1} - {_score2}";
+        }
+        else
+        {
+            if(Gamepad.current.buttonSouth.wasPressedThisFrame)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
     }
