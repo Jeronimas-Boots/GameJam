@@ -43,6 +43,9 @@ public class CharacterController : MonoBehaviour
     private Field _field;
     private bool _justJumped;
     private float _jumpedTimeAgo = 0f;
+
+    [SerializeField] private GameObject _mainBody;
+
     private void Start()
     {
         _field = GameObject.FindAnyObjectByType<Field>();
@@ -104,6 +107,14 @@ public class CharacterController : MonoBehaviour
             lookAtDirection = Quaternion.LookRotation(movementDirection, Vector3.up);
         }
     }
+
+    public void InnitializePlayer(Transform startTransform, Color color)
+    {
+        _mainBody.transform.position = startTransform.position;
+        _mainBody.transform.rotation = startTransform.rotation;
+
+        _mainBody.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
+    }
     public void OnJump(InputAction.CallbackContext context)
     {
         if (isGrounded)
@@ -141,6 +152,14 @@ public class CharacterController : MonoBehaviour
     private void ThrowObject(int handIndex) 
     {
         var obj = slots[handIndex].gameObject;
+
+        //Check if its a mine then active it or something
+        var mine = gameObject.GetComponent<Mine>();
+        if (mine)
+        {
+            mine.SetMineActive();
+        }
+
 
         obj.transform.SetParent(null, true);
         var rb = obj.gameObject.GetComponent<Rigidbody>();
