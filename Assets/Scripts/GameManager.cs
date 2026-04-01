@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshPro _Score1Label;
     [SerializeField] private TextMeshPro _Score2Label;
     [SerializeField] private TextMeshPro _TimeLabel;
-    [SerializeField] private PlayerSpawner _PlayerSpawner;
+    [SerializeField] private GameObject _PlayerSpawner;
     
     [SerializeField] private float _time = 10;
 
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (_PlayerSpawner.GetPlayerCount() < 2) return;
+        if (_PlayerSpawner.GetComponent<PlayerSpawner>().GetPlayerCount() < 2) return;
         if (_time >= 1) 
         {
             _time -= Time.deltaTime;
@@ -64,6 +64,15 @@ public class GameManager : MonoBehaviour
         }
         else if(_EndScreen.activeSelf == false)
         {
+            var players = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach(var player in players)
+            {
+                player.GetComponentInChildren<PlayerInput>().enabled = false;
+            }
+
+            _PlayerSpawner.GetComponent<PlayerInputManager>().enabled = false;
+
             _EndScreen.SetActive(true);
 
             if(_score1 < _score2)
