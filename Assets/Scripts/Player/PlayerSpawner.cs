@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerSpawner : MonoBehaviour
 {
-
+    [SerializeField] private bool _devMode = false;
     [SerializeField] private Transform[] _transforms;
     [SerializeField] private Color[] _colors;
     [SerializeField] private GameObject _ball;
@@ -11,20 +11,25 @@ public class PlayerSpawner : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
-        if (_playerCount < _transforms.Length)
+        if (GetPlayerCount() < _transforms.Length)
         {
             playerInput.GetComponent<CharacterController>().InnitializePlayer(_transforms[_playerCount], _colors[_playerCount]);
             _playerCount++;
         }
 
-        if(_playerCount == 2)
+        if(GetPlayerCount() == 2)
         {
-            Instantiate(_ball, new Vector3(0, 2, 0), new Quaternion());
+            var ball = Instantiate(_ball, new Vector3(0, 2, 0), new Quaternion());
+            foreach (Goal goal in FindObjectsByType<Goal>())
+            {
+                goal.ball = ball;
+            }
         }
     }
 
     public int GetPlayerCount()
     {
+        if (_devMode) return _playerCount + 1;
         return _playerCount;
     }
 }

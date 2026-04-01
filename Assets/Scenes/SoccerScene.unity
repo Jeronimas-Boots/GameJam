@@ -2626,6 +2626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbb5bca7c99e6a49a2d69afe55a0278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
+  _devMode: 1
   _transforms:
   - {fileID: 226472134}
   - {fileID: 1586515116}
@@ -5703,9 +5704,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e487794266c551c4d93a198b56d2f91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Goal
-  _displayScores: {fileID: 0}
+  _displayScores: {fileID: 100483166}
   _team: 2
-  _ball: {fileID: 0}
+  ball: {fileID: 0}
   _goalSound: {fileID: 8300000, guid: 07758cbcef27ccf4c9bbc16804068050, type: 3}
   _cheererManager: {fileID: 305741768}
 --- !u!65 &1866805448
@@ -6616,9 +6617,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e487794266c551c4d93a198b56d2f91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Goal
-  _displayScores: {fileID: 0}
+  _displayScores: {fileID: 100483166}
   _team: 1
-  _ball: {fileID: 0}
+  ball: {fileID: 0}
   _goalSound: {fileID: 8300000, guid: 07758cbcef27ccf4c9bbc16804068050, type: 3}
   _cheererManager: {fileID: 305741768}
 --- !u!1001 &1975023676
