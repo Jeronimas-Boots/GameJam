@@ -35,21 +35,21 @@
                 },
                 {
                     "name": "GrabObjectLeft",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "06dc6571-ea02-451b-9d1f-4eb3fa40a20d",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "GrabObjectRight",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "26c3d2eb-0c48-4f43-9290-6a2a1f85b9a3",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

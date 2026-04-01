@@ -6652,7 +6652,7 @@ MonoBehaviour:
   movementSpeed: 40.1
   maxSpeed: 80.8
   jumpForce: 6868
-  grabbingRange: 1
+  grabbingRange: 1.7
   grabbableLayerMask:
     serializedVersion: 2
     m_Bits: 128
