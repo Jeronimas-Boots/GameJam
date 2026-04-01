@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
+    [SerializeField] private Material _blueColorMaterial;
+    [SerializeField] private Material _redColorMaterial;
     [SerializeField] private Material _whiteLineMaterial;
     [SerializeField] private Material _dirtMaterial;
     [SerializeField] private Material _grassMaterial;
@@ -48,7 +50,11 @@ public class Field : MonoBehaviour
                     var cubeRenderer = cube.GetComponent<Renderer>();
                     if (y == 0 && ShouldColorWhite(x, z)) // If ground level and should be white, color white
                         cubeRenderer.material = _whiteLineMaterial;
-                    else if (y == 0) // else make grass
+                    else if (y == 0 && ShouldColorBlue(x, z))
+                        cubeRenderer.material = _blueColorMaterial;
+                    else if (y == 0 && ShouldColorRed(x, z))
+                        cubeRenderer.material = _redColorMaterial;
+                    else if (y == 0)
                         cubeRenderer.material = _grassMaterial;
                     else
                         cubeRenderer.material = _dirtMaterial;
@@ -62,6 +68,26 @@ public class Field : MonoBehaviour
                 }
             }
         }
+    }
+    private bool ShouldColorBlue(float x, float z)
+    {
+        /// Goal left
+        if (x >= 2 && x <= 3)
+        {
+            if (z >= 11 && z <= 18) return true;
+        }
+        return false;
+    }
+    private bool ShouldColorRed(float x, float z)
+    {
+
+        /// Goal right
+        if (x >= 58 && x <= 59)
+        {
+            if (z >= 11 && z <= 18) return true;
+        }
+
+        return false;
     }
     private bool ShouldColorWhite(float x, float z)
     {
