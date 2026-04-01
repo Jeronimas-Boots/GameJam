@@ -6,6 +6,7 @@ public class Goal : MonoBehaviour
     [SerializeField] private int _team;
     [SerializeField] private GameObject _ball;
     [SerializeField] private AudioClip _goalSound;
+    [SerializeField] private CheererManager _cheererManager;
 
     private bool _scored = false;
     private float _time = 0f;
@@ -24,6 +25,8 @@ public class Goal : MonoBehaviour
             }
 
             SoundFXManager.Instance.PlaySoundFXClip(_goalSound, transform, 1f);
+            _ball.GetComponent<MeshRenderer>().enabled = false;
+            _cheererManager.GoalOccurred();
             _scored = true;
         }
     }
@@ -34,6 +37,8 @@ public class Goal : MonoBehaviour
         {
             if(_time >= 3f)
             {
+                _ball.GetComponent<MeshRenderer>().enabled = true;
+                _ball.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
                 _ball.transform.position = Vector3.zero;
                 _scored = false;
                 _time = 0f;
