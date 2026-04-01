@@ -44,7 +44,7 @@ public class Mine : MonoBehaviour
 
     private void Explode()
     {
-       // SoundFXManager.Instance.PlaySoundFXClip(goalSound, transform, ExplosionVolume);
+        SoundFXManager.Instance.PlaySoundFXClip(goalSound, transform, ExplosionVolume);
 
         var rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;

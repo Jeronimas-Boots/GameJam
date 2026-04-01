@@ -6671,7 +6671,7 @@ MonoBehaviour:
   TorqueForce: 10000
   DashCooldown: 1
   DashDuration: 1
-  DashVolume: 1
+  DashVolume: 0.2
   DashSound: {fileID: 8300000, guid: 9679888df0c30744dbb6780bb460d3ef, type: 3}
   isGrounded: 0
   animator: {fileID: 8478317786468287041}
