@@ -27,7 +27,7 @@ public class ObjectsSpawner : MonoBehaviour
         _endSpawnPos = transform.GetChild(1).position;
 
         // Remove them
-        Destroy(transform.GetChild(0).gameObject);
+        Destroy(transform.GetChild(1).gameObject);
         Destroy(transform.GetChild(0).gameObject);
     }
     private void Update()
@@ -38,7 +38,7 @@ public class ObjectsSpawner : MonoBehaviour
         if (_spawnTimer < 0f && transform.childCount < _maxItems)
         {
             _spawnTimer = _spawnDelay + Random.Range(_spawnDelayVariance, -_spawnDelayVariance);
-            Instantiate(_itemsToSpawn[Random.Range(0, _itemsToSpawn.Length - 1)], new Vector3(Random.Range(_startSpawnPos.x, _endSpawnPos.x), Random.Range(_startSpawnPos.y, _endSpawnPos.y), Random.Range(_startSpawnPos.z, _endSpawnPos.z)), new Quaternion(), transform ); 
+            Instantiate(_itemsToSpawn[Random.Range(0, _itemsToSpawn.Length)], new Vector3(Random.Range(_startSpawnPos.x, _endSpawnPos.x), Random.Range(_startSpawnPos.y, _endSpawnPos.y), Random.Range(_startSpawnPos.z, _endSpawnPos.z)), new Quaternion(), transform ); 
         }
     }
 }

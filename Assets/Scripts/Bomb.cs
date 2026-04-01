@@ -32,25 +32,32 @@ public class Bomb : MonoBehaviour
     void Update()
     {
         _timer += Time.deltaTime;
-       
-        _blinkTimer += Mathf.Lerp(_startLerpExplode, _endLerpExplode, Mathf.Clamp01(_timer / TimeToExplode));
-
-        if (_blinkTimer > 0.5f)
+        if (_timer/ TimeToExplode > 0.92f)
         {
-            // Color red
             _renderer.material.color = redColor;
-
-            // If timer over 1, move back by 1
-            if (_blinkTimer > 1f)
-            {
-                _blinkTimer -= 1f;
-            }
         }
         else
         {
-            // Color normal
-            _renderer.material.color = _currentColor;
+            _blinkTimer += (Time.deltaTime + (_timer / TimeToExplode)/2) / 6;
+            if (_blinkTimer > 0.5f)
+            {
+                // Color red
+                _renderer.material.color = redColor;
+
+                // If timer over 1, move back by 1
+                if (_blinkTimer > 1f)
+                {
+                    _blinkTimer -= 1f;
+                }
+            }
+            else
+            {
+                // Color normal
+                _renderer.material.color = _currentColor;
+            }
         }
+
+
 
         if (_timer > TimeToExplode)
         {
