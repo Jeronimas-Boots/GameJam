@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Bomb : MonoBehaviour
 {
@@ -14,8 +12,6 @@ public class Bomb : MonoBehaviour
     [SerializeField] private float TimeToExplode = 10f;
     private float _timer = 0f;
     private float _blinkTimer = 0f;
-    [SerializeField] private float _startLerpExplode = 0.01f;
-    [SerializeField] private float _endLerpExplode = 0.5f;
 
     [SerializeField] private Color redColor;
     private Color _currentColor;
