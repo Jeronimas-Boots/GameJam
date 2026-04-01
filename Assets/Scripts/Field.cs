@@ -171,6 +171,7 @@ public class Field : MonoBehaviour
     }
     public bool Explode(Vector3 explosionPosition, float range)
     {
+        FindAnyObjectByType<CameraShake>().Shake(range);
         bool hasExplodedSomething = false;
         foreach (var obj in _field)
         {
