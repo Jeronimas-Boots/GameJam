@@ -1,9 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
-using System.Linq;
 
 [System.Serializable]
 public class ObjectSlot
@@ -141,16 +142,22 @@ public class CharacterController : MonoBehaviour
     }
     public void OnGrabObject(InputAction.CallbackContext context)
     {
-        if (!context.started) return;
+        
         int index = context.action.name == leftGrab.action.name ? 1 : 0;
 
-        if (index < slots.Count)
+        if (index > slots.Count) return;
+
+        if (context.started)
         {
             if (slots[index].gameObject == null)
             {
                 GrabNearestRigidBodyObject(index);
             }
-            else
+        }
+        
+        if(context.canceled)
+        {
+            if(slots[index].gameObject != null)
             {
                 ThrowObject(index);
             }
