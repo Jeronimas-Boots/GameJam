@@ -133,6 +133,14 @@ public class CharacterController : MonoBehaviour
     {
         var obj = slots[handIndex].gameObject;
 
+        //Check if its a mine then active it or something
+        var mine = gameObject.GetComponent<Mine>();
+        if (mine)
+        {
+            mine.SetMineActive();
+        }
+
+
         obj.transform.SetParent(null, true);
         var rb = obj.gameObject.GetComponent<Rigidbody>();
         var cl = obj.gameObject.GetComponent<Collider>();
