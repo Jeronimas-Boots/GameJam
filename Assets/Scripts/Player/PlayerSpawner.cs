@@ -16,4 +16,9 @@ public class PlayerSpawner : MonoBehaviour
             _playerCount++;
         }
     }
+
+    public int GetPlayerCount()
+    {
+        return _playerCount;
+    }
 }

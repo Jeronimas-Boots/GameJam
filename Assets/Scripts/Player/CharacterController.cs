@@ -11,6 +11,7 @@ public class ObjectSlot
 {
     public GameObject gameObject;
     public Transform transform;
+    [HideInInspector] public float currentGrabTime = 0f;
 }
 public class CharacterController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class CharacterController : MonoBehaviour
 
     public Vector3 movementDirection = Vector3.zero;
     public Quaternion lookAtDirection = Quaternion.identity;
+    
 
     [Range(.5f, 200.0f)] public float movementSpeed;
     [Range(.5f, 400.0f)] public float maxSpeed;
@@ -29,6 +31,7 @@ public class CharacterController : MonoBehaviour
     public float grabbingRange = 1.0f;
     public LayerMask grabbableLayerMask;
     public float ThrowingForce = 10.0f;
+    public float maxGrabTime = 5.0f;
 
     public InputActionReference leftGrab;
 
@@ -94,6 +97,23 @@ public class CharacterController : MonoBehaviour
                     _fallEffect.transform.position = transform.position;
                     _fallEffect.Play();
                 }
+            }
+        }
+
+        // Handle Grab Timers
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].gameObject != null)
+            {
+                slots[i].currentGrabTime += Time.deltaTime;
+                if (slots[i].currentGrabTime >= maxGrabTime)
+                {
+                    ThrowObject(i);
+                }
+            }
+            else
+            {
+                slots[i].currentGrabTime = 0f;
             }
         }
     }
@@ -167,10 +187,11 @@ public class CharacterController : MonoBehaviour
     private void ThrowObject(int handIndex)
     {
         var obj = slots[handIndex].gameObject;
+        if (obj == null) return;
+
         var rb = obj.GetComponent<Rigidbody>();
         var cl = obj.GetComponent<Collider>();
 
-        // Use the base 'Joint' class so it easily catches FixedJoint, ConfigurableJoint, etc.
         var joint = slots[handIndex].transform.GetComponent<Joint>();
         if (joint != null)
         {
@@ -178,13 +199,11 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            // It was a prop, undo the parenting and kinematic state
             obj.transform.SetParent(null, true);
             if (cl != null) cl.enabled = true;
             if (rb != null) rb.isKinematic = false;
         }
 
-        // Check if its a mine then active it
         var mine = obj.GetComponent<Mine>();
         if (mine)
         {
@@ -199,6 +218,24 @@ public class CharacterController : MonoBehaviour
         }
 
         slots[handIndex].gameObject = null;
+        slots[handIndex].currentGrabTime = 0f; // Reset grab timer
+    }
+
+    // Helper method to check if THIS character is currently holding another player
+    public bool IsGrabbingAnotherPlayer()
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.gameObject != null)
+            {
+                CharacterController cc = slot.gameObject.transform.root.GetComponent<CharacterController>();
+                if (cc != null && cc != this)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void GrabNearestRigidBodyObject(int handIndex)
@@ -211,14 +248,21 @@ public class CharacterController : MonoBehaviour
                 continue;
             }
 
+            // If the hit object is a player, check if they are currently busy grabbing someone
+            CharacterController hitCharacter = hit.transform.root.GetComponent<CharacterController>();
+            if (hitCharacter != null && hitCharacter.IsGrabbingAnotherPlayer())
+            {
+                continue; // Cannot grab this player because they are currently grabbing someone else
+            }
+
             var rb = hit.gameObject.GetComponent<Rigidbody>();
             var cl = hit.gameObject.GetComponent<Collider>();
             if (rb != null && cl != null)
             {
                 slots[handIndex].gameObject = hit.gameObject;
+                slots[handIndex].currentGrabTime = 0f; // Start the timer
 
-                // If the root has a CharacterController, treat it as a ragdoll/character
-                if (hit.transform.root.GetComponent<CharacterController>() != null)
+                if (hitCharacter != null)
                 {
                     Rigidbody handRb = slots[handIndex].transform.GetComponent<Rigidbody>();
                     if (handRb == null)
@@ -227,29 +271,22 @@ public class CharacterController : MonoBehaviour
                         handRb.isKinematic = true;
                     }
 
-                    // DO NOT change the hit.gameObject.transform.position here!
-                    // Let the joint connect at the current distance to avoid collider overlap.
-
                     ConfigurableJoint joint = slots[handIndex].transform.gameObject.AddComponent<ConfigurableJoint>();
                     joint.connectedBody = rb;
 
-                    // This tells the joint to maintain the distance between the hand and the body part
                     joint.autoConfigureConnectedAnchor = true;
 
-                    // Lock position (keeps them at arm's length)
                     joint.xMotion = ConfigurableJointMotion.Locked;
                     joint.yMotion = ConfigurableJointMotion.Locked;
                     joint.zMotion = ConfigurableJointMotion.Locked;
 
-                    // Free rotation (allow them to stay upright)
                     joint.angularXMotion = ConfigurableJointMotion.Free;
                     joint.angularYMotion = ConfigurableJointMotion.Free;
                     joint.angularZMotion = ConfigurableJointMotion.Free;
                 }
                 else
                 {
-                    // Otherwise, treat it as a prop/mine
-                    hit.gameObject.transform.position = slots[handIndex].transform.position; // Only teleport props
+                    hit.gameObject.transform.position = slots[handIndex].transform.position;
                     hit.gameObject.transform.SetParent(slots[handIndex].transform, true);
                     cl.enabled = false;
                     rb.isKinematic = true;
