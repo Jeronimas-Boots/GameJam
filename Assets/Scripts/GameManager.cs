@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if(Gamepad.current.buttonSouth.wasPressedThisFrame)
+            if(Gamepad.current.buttonWest.wasPressedThisFrame)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
