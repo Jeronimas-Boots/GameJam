@@ -1,42 +1,59 @@
 using UnityEngine;
+using UnityEngine.UIElements;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Mine : MonoBehaviour
 {
-    [SerializeField] public float ExplosionDuration = 1.0f;
+    [SerializeField] private ParticleSystem particlePrefab;
+    [SerializeField] private AudioClip goalSound;
+
+    [SerializeField] public float ExplosionVolume = 1.0f;
     [SerializeField] public float ExplosionForce = 100.0f;
     [SerializeField] public float ExplosionRadius = 100.0f;
 
+    public List<string> TagsToIgnore;
+
     private bool isActive = false;
+    public GameObject myOwner;
+    public void SetOwner(GameObject owner)
+    {
+        myOwner = owner;
+    }
     public void SetMineActive()
     {
+        Debug.Log("IsActive");
         isActive = true;
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1.0f,0.0f, 0.0f,0.3f);
+        Gizmos.DrawSphere(transform.position,ExplosionRadius);
     }
     private void OnTriggerEnter(Collider other)
     {
         if (!isActive) return;
-        if (other.CompareTag("Player") || other.CompareTag("Ball"))
+        if (!TagsToIgnore.Contains(other.tag))
         {
-            other.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, transform.position, ExplosionRadius);
+            if (other.gameObject.transform.root.gameObject != myOwner)
+            {
+                Explode();
+            }
         }
     }
 
     private void Explode()
     {
-        //Collider[] hits =  Physics.OverlapSphere(transform.position , ExplosionRadius);
-        //foreach (var hit in hits) {
-        //    var rb = hit.gameObject.GetComponent<Rigidbody>();
-        //    if (rb) { 
-        //        rb.AddExplosionForce(ExplosionForce, new Vector3(), ExplosionRadius);
-        //    }
-        //}
+        SoundFXManager.Instance.PlaySoundFXClip(goalSound, transform, ExplosionVolume);
+
+        var rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
         foreach (var obj in FindObjectsByType<Rigidbody>())
         {
             obj.AddExplosionForce(ExplosionForce, gameObject.transform.position, ExplosionRadius);
         }
-        Invoke(nameof(DestroySelf), ExplosionDuration);
-    }
-    private void DestroySelf()
-    {
+        ParticleSystem ps = Instantiate(particlePrefab, transform.position, Quaternion.identity);
+        Destroy(ps.gameObject, ps.main.duration);
         Destroy(gameObject);
     }
 }

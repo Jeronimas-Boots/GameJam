@@ -15,7 +15,7 @@ GameObject:
   m_Layer: 7
   m_Name: Mine
   m_TagString: Projectile
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -74,8 +74,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602dd359e1e1fc642a9c3f258976ec4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mine
-  ExplosionForce: 100
-  ExplosionRadius: 100
+  particlePrefab: {fileID: 198220379293217532, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
+  goalSound: {fileID: 8300000, guid: bf58aeac5067f9d40bfb93e1158a517d, type: 3}
+  ExplosionVolume: 1
+  ExplosionDuration: 1
+  ExplosionForce: 1500
+  ExplosionRadius: 50
+  TagsToIgnore: []
+  myOwner: {fileID: 0}
 --- !u!65 &8859440749202458119
 BoxCollider:
   m_ObjectHideFlags: 0
