@@ -6652,7 +6652,7 @@ MonoBehaviour:
   lookAtDirection: {x: 0, y: 0, z: 0, w: 1}
   movementSpeed: 100
   maxSpeed: 400
-  jumpForce: 6868
+  jumpForce: 4000
   grabbingRange: 1.7
   grabbableLayerMask:
     serializedVersion: 2

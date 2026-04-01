@@ -13,8 +13,9 @@ public class LimbCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (characterController != null)
+        if (characterController != null && collision.transform.root != transform.root)
         {
+
             characterController.isGrounded = true;
         }
 
