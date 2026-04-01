@@ -39,7 +39,7 @@ public class Goal : MonoBehaviour
             {
                 _ball.GetComponent<MeshRenderer>().enabled = true;
                 _ball.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-                _ball.transform.position = Vector3.zero;
+                _ball.transform.position = new Vector3(0, 3, 0);
                 _scored = false;
                 _time = 0f;
             }
