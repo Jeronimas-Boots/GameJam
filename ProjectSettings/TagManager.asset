@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Projectile
   - Ball
+  - Grabbable
   layers:
   - Default
   - TransparentFX

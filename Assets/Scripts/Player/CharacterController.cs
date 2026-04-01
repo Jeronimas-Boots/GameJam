@@ -1,16 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
-using System.Linq;
-using TreeEditor;
 
 [System.Serializable]
 public class ObjectSlot
 {
     public GameObject gameObject;
     public Transform transform;
+    [HideInInspector] public float currentGrabTime = 0f;
 }
 public class CharacterController : MonoBehaviour
 {
@@ -19,9 +20,10 @@ public class CharacterController : MonoBehaviour
     private RagdollBehaviour ragdollBehaviour;
     public Vector3 movementDirection = Vector3.zero;
     public Quaternion lookAtDirection = Quaternion.identity;
+    
 
-    [Range(.5f, 100.0f)] public float movementSpeed;
-    [Range(.5f, 200.0f)] public float maxSpeed;
+    [Range(.5f, 200.0f)] public float movementSpeed;
+    [Range(.5f, 400.0f)] public float maxSpeed;
     [Range(.5f, 10000.0f)] public float jumpForce;
 
 
@@ -30,8 +32,9 @@ public class CharacterController : MonoBehaviour
     public float grabbingRange = 1.0f;
     public LayerMask grabbableLayerMask;
     public float ThrowingForce = 10.0f;
+    public float maxGrabTime = 5.0f;
 
-    public InputActionReference leftGrab; 
+    public InputActionReference leftGrab;
 
     public List<ObjectSlot> slots;
 
@@ -68,7 +71,7 @@ public class CharacterController : MonoBehaviour
         _fallEffect = transform.GetComponentInChildren<ParticleSystem>();
         _fallEffect.transform.SetParent(null, true);
         _field = GameObject.FindAnyObjectByType<Field>();
-        if(!(_rb = transform.GetComponent<Rigidbody>()))
+        if (!(_rb = transform.GetComponent<Rigidbody>()))
             _rb = transform.AddComponent<Rigidbody>();
 
         _rb.isKinematic = false;
@@ -116,11 +119,28 @@ public class CharacterController : MonoBehaviour
             if (_jumpedTimeAgo > 0.2f && isGrounded)
             {
                 _justJumped = false;
-                if (_field.Explode(transform.position, 1.5f))
+                if (_field.Explode(transform.position, 1f))
                 {
                     _fallEffect.transform.position = transform.position;
                     _fallEffect.Play();
                 }
+            }
+        }
+
+        // Handle Grab Timers
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].gameObject != null)
+            {
+                slots[i].currentGrabTime += Time.deltaTime;
+                if (slots[i].currentGrabTime >= maxGrabTime)
+                {
+                    ThrowObject(i);
+                }
+            }
+            else
+            {
+                slots[i].currentGrabTime = 0f;
             }
         }
     }
@@ -132,7 +152,7 @@ public class CharacterController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         var input = context.ReadValue<Vector2>();
-        movementDirection = new Vector3(input.x ,0, input.y);
+        movementDirection = new Vector3(input.x, 0, input.y);
 
         bool isWalking = input.sqrMagnitude > 0.01f;
         animator.SetBool("isWalking", isWalking);
@@ -195,62 +215,136 @@ public class CharacterController : MonoBehaviour
     }
     public void OnGrabObject(InputAction.CallbackContext context)
     {
-        if (!context.started) return;
+        
         int index = context.action.name == leftGrab.action.name ? 1 : 0;
 
-        if(index < slots.Count)
+        if (index > slots.Count) return;
+
+        if (context.started)
         {
             if (slots[index].gameObject == null)
             {
                 GrabNearestRigidBodyObject(index);
             }
-            else
+        }
+        
+        if(context.canceled)
+        {
+            if(slots[index].gameObject != null)
             {
                 ThrowObject(index);
             }
         }
     }
 
-    private void ThrowObject(int handIndex) 
+    private void ThrowObject(int handIndex)
     {
         var obj = slots[handIndex].gameObject;
+        if (obj == null) return;
 
+        var rb = obj.GetComponent<Rigidbody>();
+        var cl = obj.GetComponent<Collider>();
 
+        var joint = slots[handIndex].transform.GetComponent<Joint>();
+        if (joint != null)
+        {
+            Destroy(joint);
+        }
+        else
+        {
+            obj.transform.SetParent(null, true);
+            if (cl != null) cl.enabled = true;
+            if (rb != null) rb.isKinematic = false;
+        }
 
-        obj.transform.SetParent(null, true);
-        var rb = obj.gameObject.GetComponent<Rigidbody>();
-        var cl = obj.gameObject.GetComponent<Collider>();
-
-        //Check if its a mine then active it
         var mine = obj.GetComponent<Mine>();
         if (mine)
         {
             mine.SetMineActive();
             mine.SetOwner(transform.root.gameObject);
-            cl.isTrigger = true;
+            if (cl != null) cl.isTrigger = true;
         }
 
+        if (rb != null)
+        {
+            rb.AddForce(gameObject.transform.forward * ThrowingForce, ForceMode.Force);
+        }
 
-        cl.enabled = true;
-        rb.isKinematic = false;
-        rb.AddForce(gameObject.transform.forward * ThrowingForce, ForceMode.Force);
         slots[handIndex].gameObject = null;
-
+        slots[handIndex].currentGrabTime = 0f; // Reset grab timer
     }
+
+    // Helper method to check if THIS character is currently holding another player
+    public bool IsGrabbingAnotherPlayer()
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.gameObject != null)
+            {
+                CharacterController cc = slot.gameObject.transform.root.GetComponent<CharacterController>();
+                if (cc != null && cc != this)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void GrabNearestRigidBodyObject(int handIndex)
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, grabbingRange, grabbableLayerMask);
         foreach (var hit in hits)
         {
+            if (hit.transform.root == transform.root)
+            {
+                continue;
+            }
+
+            // If the hit object is a player, check if they are currently busy grabbing someone
+            CharacterController hitCharacter = hit.transform.root.GetComponent<CharacterController>();
+            if (hitCharacter != null && hitCharacter.IsGrabbingAnotherPlayer())
+            {
+                continue; // Cannot grab this player because they are currently grabbing someone else
+            }
+
             var rb = hit.gameObject.GetComponent<Rigidbody>();
             var cl = hit.gameObject.GetComponent<Collider>();
             if (rb != null && cl != null)
             {
-                hit.gameObject.transform.position = slots[handIndex].transform.position;
-                hit.gameObject.transform.SetParent(slots[handIndex].transform, true);
                 slots[handIndex].gameObject = hit.gameObject;
-                cl.enabled = false;
-                rb.isKinematic = true;
+                slots[handIndex].currentGrabTime = 0f; // Start the timer
+
+                if (hitCharacter != null)
+                {
+                    Rigidbody handRb = slots[handIndex].transform.GetComponent<Rigidbody>();
+                    if (handRb == null)
+                    {
+                        handRb = slots[handIndex].transform.gameObject.AddComponent<Rigidbody>();
+                        handRb.isKinematic = true;
+                    }
+
+                    ConfigurableJoint joint = slots[handIndex].transform.gameObject.AddComponent<ConfigurableJoint>();
+                    joint.connectedBody = rb;
+
+                    joint.autoConfigureConnectedAnchor = true;
+
+                    joint.xMotion = ConfigurableJointMotion.Locked;
+                    joint.yMotion = ConfigurableJointMotion.Locked;
+                    joint.zMotion = ConfigurableJointMotion.Locked;
+
+                    joint.angularXMotion = ConfigurableJointMotion.Free;
+                    joint.angularYMotion = ConfigurableJointMotion.Free;
+                    joint.angularZMotion = ConfigurableJointMotion.Free;
+                }
+                else
+                {
+                    hit.gameObject.transform.position = slots[handIndex].transform.position;
+                    hit.gameObject.transform.SetParent(slots[handIndex].transform, true);
+                    cl.enabled = false;
+                    rb.isKinematic = true;
+                }
+
                 return;
             }
         }

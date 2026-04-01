@@ -15,11 +15,11 @@ public class Goal : MonoBehaviour
     {
         if(other.tag == "Ball" && _scored == false)
         {
-            if(_team == 1)
+            if(_team == 2)
             {
                 _displayScores.Player1Scored();
             }
-            else if(_team == 2)
+            else if(_team == 1)
             {
                 _displayScores.Player2Scored();
             }
@@ -39,7 +39,7 @@ public class Goal : MonoBehaviour
             {
                 _ball.GetComponent<MeshRenderer>().enabled = true;
                 _ball.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-                _ball.transform.position = Vector3.zero;
+                _ball.transform.position = new Vector3(0, 3, 0);
                 _scored = false;
                 _time = 0f;
             }

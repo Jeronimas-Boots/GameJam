@@ -3,33 +3,56 @@ using UnityEngine;
 
 public class DisplayScores : MonoBehaviour
 {
-    [SerializeField] TextMeshPro _HomeScore;
-    [SerializeField] TextMeshPro _GuestScore;
+    [SerializeField] private TextMeshPro _Score1Label;
+    [SerializeField] private TextMeshPro _Score2Label;
+    [SerializeField] private TextMeshPro _TimeLabel;
+    [SerializeField] private PlayerSpawner _PlayerSpawner;
+    [SerializeField] private float _time = 300;
 
-    private int score1 = 0;
-    private int score2 = 0;
+
+    private float _minutes = 0;
+    private float _seconds = 0;
+    private int _score1 = 0;
+    private int _score2 = 0;
+    
 
     public void Player1Scored()
     {
-        score1++;
-        UpdateScore();
+        UpdateScore(_score1, _Score1Label);
     }
 
     public void Player2Scored()
     {
-        score2++;
-        UpdateScore();
+        UpdateScore(_score2, _Score2Label);
     }
 
-    private void UpdateScore()
+    public void UpdateScore(int score, TextMeshPro scoreLabel)
     {
-        string score1String = score1.ToString();
-        string score2String = score2.ToString();
+        score++;
 
-        if (score1 < 10) score1String = "0" + score1String;
-        if (score2 < 10) score2String = "0" + score2String;
+        string scoreString = score.ToString();
 
-        _HomeScore.text = score1String;
-        _GuestScore.text = score2String;
+        if(score < 10) scoreString = "0" + scoreString;
+
+        scoreLabel.text = scoreString;
+    }
+
+    private void Update()
+    {
+        if (_time > 0 && _PlayerSpawner.GetPlayerCount() == 2) 
+        {
+            _time -= Time.deltaTime;
+            _minutes = Mathf.Floor(_time / 60);
+            _seconds = Mathf.Floor(_time % 60);
+
+            if (_seconds < 10)
+            {
+                _TimeLabel.text = $"{_minutes}:0{_seconds}";
+            }
+            else
+            {
+                _TimeLabel.text = $"{_minutes}:{_seconds}";
+            }
+        }
     }
 }
