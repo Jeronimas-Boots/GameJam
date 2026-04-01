@@ -77,9 +77,7 @@ public class CharacterController : MonoBehaviour
 
         _rb.isKinematic = false;
         _rb.useGravity = true;
-        _rb.freezeRotation = false;
-
-
+        _rb.freezeRotation = true;
     }
     private void FixedUpdate()
     {
@@ -178,6 +176,7 @@ public class CharacterController : MonoBehaviour
         {
             CanDash = false;
             animator.enabled = false;
+            _rb.freezeRotation = false;
             _rb.AddForce(movementDirection * DashForce,ForceMode.VelocityChange);
             SoundFXManager.Instance.PlaySoundFXClip(DashSound, transform, DashVolume);
             if (ragdollBehaviour)
@@ -197,6 +196,7 @@ public class CharacterController : MonoBehaviour
     {
         animator.enabled = true;
         ragdollBehaviour.ChangeRagdollMode(0);
+        _rb.freezeRotation = true;
     }
     public void OnJump(InputAction.CallbackContext context)
     {
