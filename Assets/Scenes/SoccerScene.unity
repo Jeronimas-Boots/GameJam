@@ -2488,6 +2488,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 785965846}
+  - component: {fileID: 785965847}
   m_Layer: 0
   m_Name: CameraPosition
   m_TagString: Untagged
@@ -2511,6 +2512,21 @@ Transform:
   - {fileID: 255502388}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 43.421, y: 0, z: 0}
+--- !u!114 &785965847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785965845}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f17979a4c61b7e46aa0135a7f08c2a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraAnimationStartEnd
+  _speed: 30
+  _maxUpRotation: 43.421
+  _maxDownRotation: -10
 --- !u!114 &790390094 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 230704641966248236, guid: 80b0286847d00cb4fa94e7af3310066f, type: 3}
