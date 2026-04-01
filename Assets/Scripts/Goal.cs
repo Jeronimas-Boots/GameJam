@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    [SerializeField] private DisplayScores _displayScores;
+    [SerializeField] private GameManager _displayScores;
     [SerializeField] private int _team;
     [SerializeField] private GameObject _ball;
     [SerializeField] private AudioClip _goalSound;
