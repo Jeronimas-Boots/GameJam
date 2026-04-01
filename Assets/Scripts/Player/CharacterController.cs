@@ -43,6 +43,9 @@ public class CharacterController : MonoBehaviour
     private Field _field;
     private bool _justJumped;
     private float _jumpedTimeAgo = 0f;
+
+    [SerializeField] private GameObject _mainBody;
+
     private void Start()
     {
         _field = GameObject.FindAnyObjectByType<Field>();
@@ -51,6 +54,7 @@ public class CharacterController : MonoBehaviour
 
         _rb.isKinematic = false;
         _rb.useGravity = true;
+        _rb.freezeRotation = true;
     }
     private void FixedUpdate()
     {
@@ -65,6 +69,11 @@ public class CharacterController : MonoBehaviour
                 horizontal = horizontal.normalized * maxSpeed;
                 _rb.linearVelocity = new Vector3(horizontal.x, vel.y, horizontal.z);
             }
+
+            if (_rb != null)
+            {
+                _rb.MoveRotation(lookAtDirection);
+            }
         }
     }
     private void Update()
@@ -77,9 +86,6 @@ public class CharacterController : MonoBehaviour
                 _justJumped = false;
                 _field.Explode(transform.position, 1.5f);
             }
-        }
-        if (_rb != null) {
-            _rb.transform.rotation = lookAtDirection;
         }
     }
     private void OnDrawGizmosSelected()
@@ -94,6 +100,18 @@ public class CharacterController : MonoBehaviour
 
         bool isWalking = input.sqrMagnitude > 0.01f;
         animator.SetBool("isWalking", isWalking);
+
+        // Update look direction to match movement direction if currently moving
+        if (isWalking)
+        {
+            lookAtDirection = Quaternion.LookRotation(movementDirection, Vector3.up);
+        }
+    }
+
+    public void InnitializePlayer(Transform startTransform)
+    {
+        _mainBody.transform.position = startTransform.position;
+        _mainBody.transform.rotation = startTransform.rotation;
     }
     public void OnJump(InputAction.CallbackContext context)
     {
@@ -108,7 +126,7 @@ public class CharacterController : MonoBehaviour
     public void OnRotate(InputAction.CallbackContext context)
     {
         var input = context.ReadValue<Vector2>();
-        lookAtDirection = Quaternion.LookRotation(new Vector3(input.x, 0, input.y),Vector3.up);
+        lookAtDirection = Quaternion.LookRotation(new Vector3(input.x, 0, input.y), Vector3.up);
 
     }
     public void OnGrabObject(InputAction.CallbackContext context)

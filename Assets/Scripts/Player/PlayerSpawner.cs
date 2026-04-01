@@ -11,8 +11,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         if (playerCount < transforms.Length)
         {
-            playerInput.transform.position = transforms[playerCount].position;
-            playerInput.transform.rotation = transforms[playerCount].rotation;
+            playerInput.GetComponent<CharacterController>().InnitializePlayer(transforms[playerCount]);
             playerCount++;
         }
     }
