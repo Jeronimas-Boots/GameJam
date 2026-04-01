@@ -68,6 +68,8 @@ public class Bomb : MonoBehaviour
             ParticleSystem ps = Instantiate(particlePrefab, transform.position, Quaternion.identity);
             Destroy(ps.gameObject, ps.main.duration);
 
+            SoundFXManager.Instance.PlaySoundFXClip(goalSound, transform, ExplosionVolume);
+
             FindAnyObjectByType<Field>().Explode(transform.position, ExplosionRadius / 4);
             Destroy(gameObject);
         }

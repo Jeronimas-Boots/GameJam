@@ -76,7 +76,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Mine
   particlePrefab: {fileID: 198220379293217532, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
   goalSound: {fileID: 8300000, guid: bf58aeac5067f9d40bfb93e1158a517d, type: 3}
-  ExplosionVolume: 0.2
+  ExplosionVolume: 0.1
   ExplosionForce: 500
   ExplosionRadius: 8
   TagsToIgnore: []

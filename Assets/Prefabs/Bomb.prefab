@@ -166,7 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bomb
   particlePrefab: {fileID: 198917022394846920, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   goalSound: {fileID: 8300000, guid: bf58aeac5067f9d40bfb93e1158a517d, type: 3}
-  ExplosionVolume: 0.3
+  ExplosionVolume: 0.1
   ExplosionForce: 600
   ExplosionRadius: 7
   TimeToExplode: 8
