@@ -7113,6 +7113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectsSpawner
   _itemsToSpawn:
   - {fileID: 7039406522823251853, guid: 6b6b6a7487eddc74f982453c818161c8, type: 3}
+  - {fileID: 2707413871297094887, guid: c4d7c2b8fcb0c5648bbfdce80c9b2395, type: 3}
   _maxItems: 5
   _spawnDelay: 4
   _spawnDelayVariance: 2

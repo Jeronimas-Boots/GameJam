@@ -54,7 +54,9 @@ public class Mine : MonoBehaviour
         }
         ParticleSystem ps = Instantiate(particlePrefab, transform.position, Quaternion.identity);
         Destroy(ps.gameObject, ps.main.duration);
-        //GameObject.FindAnyObjectByType<Field>().Explode(transform.position, ExplosionRadius/4f);
+        var field = GameObject.FindAnyObjectByType<Field>();
+        if (field != null)
+            field.Explode(transform.position, ExplosionRadius/4f);
         Destroy(gameObject);
     }
 }
