@@ -278,8 +278,8 @@ MonoBehaviour:
   _Score1Label: {fileID: 1099811554}
   _Score2Label: {fileID: 1099811551}
   _TimeLabel: {fileID: 790390094}
-  _PlayerSpawner: {fileID: 900792168}
-  _time: 10
+  _PlayerSpawner: {fileID: 900792167}
+  _time: 300
   _EndScreen: {fileID: 1821992033}
   _EndScore: {fileID: 1500095718}
   _WinnerText: {fileID: 865291985}
@@ -5483,7 +5483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
