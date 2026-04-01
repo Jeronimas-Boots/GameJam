@@ -88,7 +88,7 @@ public class CharacterController : MonoBehaviour
             if (_jumpedTimeAgo > 0.2f && isGrounded)
             {
                 _justJumped = false;
-                if (_field.Explode(transform.position, 1.5f))
+                if (_field.Explode(transform.position, 1f))
                 {
                     _fallEffect.transform.position = transform.position;
                     _fallEffect.Play();
