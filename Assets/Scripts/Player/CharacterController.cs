@@ -18,8 +18,8 @@ public class CharacterController : MonoBehaviour
     public Vector3 movementDirection = Vector3.zero;
     public Quaternion lookAtDirection = Quaternion.identity;
 
-    [Range(.5f, 100.0f)] public float movementSpeed;
-    [Range(.5f, 200.0f)] public float maxSpeed;
+    [Range(.5f, 200.0f)] public float movementSpeed;
+    [Range(.5f, 400.0f)] public float maxSpeed;
     [Range(.5f, 10000.0f)] public float jumpForce;
 
 
@@ -88,7 +88,7 @@ public class CharacterController : MonoBehaviour
             if (_jumpedTimeAgo > 0.2f && isGrounded)
             {
                 _justJumped = false;
-                if (_field.Explode(transform.position, 1.5f))
+                if (_field.Explode(transform.position, 1f))
                 {
                     _fallEffect.transform.position = transform.position;
                     _fallEffect.Play();
@@ -161,17 +161,21 @@ public class CharacterController : MonoBehaviour
     {
         var obj = slots[handIndex].gameObject;
 
-        //Check if its a mine then active it or something
-        var mine = gameObject.GetComponent<Mine>();
-        if (mine)
-        {
-            mine.SetMineActive();
-        }
 
 
         obj.transform.SetParent(null, true);
         var rb = obj.gameObject.GetComponent<Rigidbody>();
         var cl = obj.gameObject.GetComponent<Collider>();
+
+        //Check if its a mine then active it
+        var mine = obj.GetComponent<Mine>();
+        if (mine)
+        {
+            mine.SetMineActive();
+            mine.SetOwner(transform.root.gameObject);
+            cl.isTrigger = true;
+        }
+
 
         cl.enabled = true;
         rb.isKinematic = false;

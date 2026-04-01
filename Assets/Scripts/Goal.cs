@@ -15,11 +15,11 @@ public class Goal : MonoBehaviour
     {
         if(other.tag == "Ball" && _scored == false)
         {
-            if(_team == 1)
+            if(_team == 2)
             {
                 _displayScores.Player1Scored();
             }
-            else if(_team == 2)
+            else if(_team == 1)
             {
                 _displayScores.Player2Scored();
             }
