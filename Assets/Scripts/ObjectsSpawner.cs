@@ -27,7 +27,7 @@ public class ObjectsSpawner : MonoBehaviour
         _endSpawnPos = transform.GetChild(1).position;
 
         // Remove them
-        Destroy(transform.GetChild(0).gameObject);
+        Destroy(transform.GetChild(1).gameObject);
         Destroy(transform.GetChild(0).gameObject);
     }
     private void Update()

@@ -169,7 +169,7 @@ MonoBehaviour:
   ExplosionVolume: 0.3
   ExplosionForce: 600
   ExplosionRadius: 7
-  TimeToExplode: 10
-  _startLerpExplode: 0.01
-  _endLerpExplode: 0.5
+  TimeToExplode: 8
+  _startLerpExplode: 0.0000001
+  _endLerpExplode: 10
   redColor: {r: 1, g: 0, b: 0, a: 0}
