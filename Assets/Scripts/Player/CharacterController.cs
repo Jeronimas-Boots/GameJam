@@ -43,11 +43,15 @@ public class CharacterController : MonoBehaviour
     private Field _field;
     private bool _justJumped;
     private float _jumpedTimeAgo = 0f;
+    private ParticleSystem _fallEffect;
+    private Vector3 _lastFallPosition;
 
     [SerializeField] private GameObject _mainBody;
 
     private void Start()
     {
+        _fallEffect = transform.GetComponentInChildren<ParticleSystem>();
+        _fallEffect.transform.SetParent(null, true);
         _field = GameObject.FindAnyObjectByType<Field>();
         if(!(_rb = transform.GetComponent<Rigidbody>()))
             _rb = transform.AddComponent<Rigidbody>();
@@ -78,13 +82,17 @@ public class CharacterController : MonoBehaviour
     }
     private void Update()
     {
-        if (_justJumped && _field != null)
+        if (_justJumped && _field != null && _fallEffect != null)
         {
             _jumpedTimeAgo += Time.deltaTime;
             if (_jumpedTimeAgo > 0.2f && isGrounded)
             {
                 _justJumped = false;
-                _field.Explode(transform.position, 1.5f);
+                if (_field.Explode(transform.position, 1.5f))
+                {
+                    _fallEffect.transform.position = transform.position;
+                    _fallEffect.Play();
+                }
             }
         }
     }
@@ -108,10 +116,12 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public void InnitializePlayer(Transform startTransform)
+    public void InnitializePlayer(Transform startTransform, Color color)
     {
         _mainBody.transform.position = startTransform.position;
         _mainBody.transform.rotation = startTransform.rotation;
+
+        _mainBody.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
     }
     public void OnJump(InputAction.CallbackContext context)
     {
