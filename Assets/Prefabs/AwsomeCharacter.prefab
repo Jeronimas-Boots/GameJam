@@ -5964,6 +5964,7 @@ MonoBehaviour:
     transform: {fileID: 8311959672836633216}
   isGrounded: 0
   animator: {fileID: 8478317786468287041}
+  _mainBody: {fileID: 4170124854279549644}
 --- !u!114 &5580186944908643273
 MonoBehaviour:
   m_ObjectHideFlags: 0

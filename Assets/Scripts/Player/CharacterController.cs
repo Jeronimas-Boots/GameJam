@@ -43,6 +43,9 @@ public class CharacterController : MonoBehaviour
     private Field _field;
     private bool _justJumped;
     private float _jumpedTimeAgo = 0f;
+
+    [SerializeField] private GameObject _mainBody;
+
     private void Start()
     {
         _field = GameObject.FindAnyObjectByType<Field>();
@@ -103,6 +106,12 @@ public class CharacterController : MonoBehaviour
         {
             lookAtDirection = Quaternion.LookRotation(movementDirection, Vector3.up);
         }
+    }
+
+    public void InnitializePlayer(Transform startTransform)
+    {
+        _mainBody.transform.position = startTransform.position;
+        _mainBody.transform.rotation = startTransform.rotation;
     }
     public void OnJump(InputAction.CallbackContext context)
     {
