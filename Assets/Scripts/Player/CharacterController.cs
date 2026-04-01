@@ -108,10 +108,12 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public void InnitializePlayer(Transform startTransform)
+    public void InnitializePlayer(Transform startTransform, Color color)
     {
         _mainBody.transform.position = startTransform.position;
         _mainBody.transform.rotation = startTransform.rotation;
+
+        _mainBody.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
     }
     public void OnJump(InputAction.CallbackContext context)
     {

@@ -1200,9 +1200,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbb5bca7c99e6a49a2d69afe55a0278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
-  transforms:
+  _transforms:
   - {fileID: 226472134}
   - {fileID: 1586515116}
+  _colors:
+  - {r: 0.07035423, g: 0.541676, b: 0.8773585, a: 0}
+  - {r: 0.8584906, g: 0.08503916, b: 0.08503916, a: 0}
 --- !u!4 &900792169
 Transform:
   m_ObjectHideFlags: 0
