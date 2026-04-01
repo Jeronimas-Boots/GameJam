@@ -5,7 +5,10 @@ public class LimbCollision : MonoBehaviour
     public CharacterController characterController;
     void Start()
     {
-        characterController = FindAnyObjectByType<CharacterController>();
+        if (characterController == null)
+        {
+            characterController = transform.root.GetComponentInChildren<CharacterController>();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
