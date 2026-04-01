@@ -76,6 +76,10 @@ public class Field : MonoBehaviour
         {
             if (z >= 11 && z <= 18) return true;
         }
+        if (x >= 28 && x <= 31)
+        {
+            if (z >= 12 && z <= 17) return true;
+        }
         return false;
     }
     private bool ShouldColorRed(float x, float z)
@@ -85,6 +89,10 @@ public class Field : MonoBehaviour
         if (x >= 58 && x <= 59)
         {
             if (z >= 11 && z <= 18) return true;
+        }
+        if (x >= 32 && x <= 34)
+        {
+            if (z >= 12 && z <= 17) return true;
         }
 
         return false;

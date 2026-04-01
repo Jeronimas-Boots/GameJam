@@ -255,7 +255,7 @@ RectTransform:
   m_GameObject: {fileID: 2438065305302351510}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.296}
-  m_LocalScale: {x: 0.02, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.02, y: 0.06744296, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2366443356443398088}
@@ -361,8 +361,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -436,7 +436,7 @@ RectTransform:
   m_GameObject: {fileID: 3076488724919207530}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -0.295}
-  m_LocalScale: {x: 0.02, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.02, y: 0.06744296, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2366443356443398088}
@@ -542,8 +542,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -729,7 +729,7 @@ RectTransform:
   m_GameObject: {fileID: 4656494691488506508}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -0.291}
-  m_LocalScale: {x: 0.02, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.02, y: 0.06744296, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2366443356443398088}
@@ -835,8 +835,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 44
+  m_fontSizeBase: 44
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -944,7 +944,7 @@ RectTransform:
   m_GameObject: {fileID: 6730406035997967452}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.296}
-  m_LocalScale: {x: 0.02, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.02, y: 0.06744296, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2366443356443398088}
@@ -1050,8 +1050,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 44
+  m_fontSizeBase: 44
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
