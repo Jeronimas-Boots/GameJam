@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &469393381864459989
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &658963782499010249
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &963297711400972728
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,7 +1243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &1152005021417036746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1596,7 +1596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &1885000706114757124
 GameObject:
   m_ObjectHideFlags: 0
@@ -1944,7 +1944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &2230537779297445003
 GameObject:
   m_ObjectHideFlags: 0
@@ -2479,7 +2479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &3009551709474596115
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,7 +2769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!114 &4342130297627217257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3104,7 +3104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &3301958784927149438
 GameObject:
   m_ObjectHideFlags: 0
@@ -3661,7 +3661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &3861151955764005241
 GameObject:
   m_ObjectHideFlags: 0
@@ -3920,7 +3920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!114 &5833024827381292074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4493,7 +4493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &5005247895781830165
 GameObject:
   m_ObjectHideFlags: 0
@@ -4752,7 +4752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!114 &3727529084032573354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5874,7 +5874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &7256495784013867098
 GameObject:
   m_ObjectHideFlags: 0
@@ -6800,7 +6800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!1 &8239569174762916421
 GameObject:
   m_ObjectHideFlags: 0
@@ -7059,7 +7059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593136dfaf0f4b148933c205e2736476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbCollision
-  characterController: {fileID: 0}
+  characterController: {fileID: 6809158565998310221}
 --- !u!114 &6243565387819517698
 MonoBehaviour:
   m_ObjectHideFlags: 0
