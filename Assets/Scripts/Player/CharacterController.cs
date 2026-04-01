@@ -297,59 +297,78 @@ public class CharacterController : MonoBehaviour
     private void GrabNearestRigidBodyObject(int handIndex)
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, grabbingRange, grabbableLayerMask);
+
         foreach (var hit in hits)
         {
             if (hit.transform.root == transform.root)
-            {
                 continue;
-            }
+            
 
             // If the hit object is a player, check if they are currently busy grabbing someone
             CharacterController hitCharacter = hit.transform.root.GetComponent<CharacterController>();
-            if (hitCharacter != null && hitCharacter.IsGrabbingAnotherPlayer())
+
+            if (hitCharacter != null)
             {
-                continue; // Cannot grab this player because they are currently grabbing someone else
+                if(TryGrabPlayer(handIndex, hitCharacter, hit))
+                    return;
+                
             }
-
-            var rb = hit.gameObject.GetComponent<Rigidbody>();
-            var cl = hit.gameObject.GetComponent<Collider>();
-            if (rb != null && cl != null)
+            else
             {
-                slots[handIndex].gameObject = hit.gameObject;
-                slots[handIndex].currentGrabTime = 0f; // Start the timer
-
-                if (hitCharacter != null)
-                {
-                    Rigidbody handRb = slots[handIndex].transform.GetComponent<Rigidbody>();
-                    if (handRb == null)
-                    {
-                        handRb = slots[handIndex].transform.gameObject.AddComponent<Rigidbody>();
-                        handRb.isKinematic = true;
-                    }
-
-                    ConfigurableJoint joint = slots[handIndex].transform.gameObject.AddComponent<ConfigurableJoint>();
-                    joint.connectedBody = rb;
-
-                    joint.autoConfigureConnectedAnchor = true;
-
-                    joint.xMotion = ConfigurableJointMotion.Locked;
-                    joint.yMotion = ConfigurableJointMotion.Locked;
-                    joint.zMotion = ConfigurableJointMotion.Locked;
-
-                    joint.angularXMotion = ConfigurableJointMotion.Free;
-                    joint.angularYMotion = ConfigurableJointMotion.Free;
-                    joint.angularZMotion = ConfigurableJointMotion.Free;
-                }
-                else
-                {
-                    hit.gameObject.transform.position = slots[handIndex].transform.position;
-                    hit.gameObject.transform.SetParent(slots[handIndex].transform, true);
-                    cl.enabled = false;
-                    rb.isKinematic = true;
-                }
-
-                return;
+                if(TryGrabItem(handIndex, hit))
+                    return;
             }
         }
+    }
+
+    private bool TryGrabPlayer(int handIndex, CharacterController target, Collider hit)
+    {
+        if (target.IsGrabbingAnotherPlayer() || this.IsGrabbingAnotherPlayer())
+            return false;
+
+        var rb = hit.attachedRigidbody;
+        if (rb == null) return false;
+
+        slots[handIndex].gameObject = hit.gameObject;
+        slots[handIndex].currentGrabTime = 0f;
+
+        Rigidbody handRb = slots[handIndex].transform.GetComponent<Rigidbody>();
+        if (handRb == null)
+        {
+            handRb = slots[handIndex].transform.gameObject.AddComponent<Rigidbody>();
+            handRb.isKinematic = true;
+        }
+
+        var joint = slots[handIndex].transform.gameObject.AddComponent<ConfigurableJoint>();
+        joint.connectedBody = rb;
+
+        joint.autoConfigureConnectedAnchor = true;
+
+        joint.xMotion = ConfigurableJointMotion.Limited;
+        joint.yMotion = ConfigurableJointMotion.Limited;
+        joint.zMotion = ConfigurableJointMotion.Limited;
+
+        joint.angularXMotion = ConfigurableJointMotion.Free;
+        joint.angularYMotion = ConfigurableJointMotion.Free;
+        joint.angularZMotion = ConfigurableJointMotion.Free;
+
+            
+        return true;
+    }
+
+    private bool TryGrabItem(int handIndex, Collider hit)
+    {
+        var rb = hit.attachedRigidbody;
+        if (rb == null) return false;
+
+        slots[handIndex].gameObject = hit.gameObject;
+
+        hit.transform.position = slots[handIndex].transform.position;
+        hit.transform.SetParent(slots[handIndex].transform, true);
+
+        hit.enabled = false;
+        rb.isKinematic = true;
+
+        return true;
     }
 }
