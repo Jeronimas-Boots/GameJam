@@ -11,6 +11,8 @@ public class ObjectsSpawner : MonoBehaviour
     private float _spawnDelay = 1f;
     [SerializeField]
     private float _spawnDelayVariance = 0.5f;
+    [SerializeField]
+    private PlayerSpawner _playerSpawner;
 
     private float _spawnTimer = 0f;
 
@@ -30,6 +32,8 @@ public class ObjectsSpawner : MonoBehaviour
     }
     private void Update()
     {
+        if (_playerSpawner.GetPlayerCount() < 2) return;
+
         _spawnTimer -= Time.deltaTime;
         if (_spawnTimer < 0f && transform.childCount < _maxItems)
         {

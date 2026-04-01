@@ -17,6 +17,7 @@ public class CharacterController : MonoBehaviour
 {
     private Rigidbody _rb;
 
+    private RagdollBehaviour ragdollBehaviour;
     public Vector3 movementDirection = Vector3.zero;
     public Quaternion lookAtDirection = Quaternion.identity;
     
@@ -37,6 +38,18 @@ public class CharacterController : MonoBehaviour
 
     public List<ObjectSlot> slots;
 
+    [Header("Dashing")]
+
+    public float DashForce = 100.0f;
+    public float TorqueForce = 360.0f;
+    public float DashCooldown = 1.0f;
+    public float DashDuration = 1.0f;
+    private float DashCooldownTimer = 0.0f;
+    private bool CanDash = false;
+
+    public float DashVolume = 1.0f;
+    public AudioClip DashSound;
+
     [HideInInspector]
     public bool isGrounded;
 
@@ -52,8 +65,9 @@ public class CharacterController : MonoBehaviour
 
     [SerializeField] private GameObject _mainBody;
 
-    private void Start()
+    private void Awake()
     {
+        ragdollBehaviour = gameObject.GetComponent<RagdollBehaviour>();
         _fallEffect = transform.GetComponentInChildren<ParticleSystem>();
         _fallEffect.transform.SetParent(null, true);
         _field = GameObject.FindAnyObjectByType<Field>();
@@ -62,7 +76,9 @@ public class CharacterController : MonoBehaviour
 
         _rb.isKinematic = false;
         _rb.useGravity = true;
-        _rb.freezeRotation = true;
+        _rb.freezeRotation = false;
+
+
     }
     private void FixedUpdate()
     {
@@ -86,6 +102,17 @@ public class CharacterController : MonoBehaviour
     }
     private void Update()
     {
+        DashCooldownTimer += Time.deltaTime;
+        if(DashCooldownTimer > DashCooldown)
+        {
+            DashCooldownTimer = 0;
+            CanDash = true;
+        }
+        if (isGrounded)
+        {
+            ragdollBehaviour.ChangeRagdollMode(0);
+        }
+
         if (_justJumped && _field != null && _fallEffect != null)
         {
             _jumpedTimeAgo += Time.deltaTime;
@@ -144,6 +171,32 @@ public class CharacterController : MonoBehaviour
 
         _mainBody.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
     }
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (CanDash)
+        {
+            CanDash = false;
+            animator.enabled = false;
+            _rb.AddForce(movementDirection * DashForce,ForceMode.VelocityChange);
+            SoundFXManager.Instance.PlaySoundFXClip(DashSound, transform, DashVolume);
+            if (ragdollBehaviour)
+            {
+                ragdollBehaviour.ChangeRagdollMode(1);
+            }
+            _rb.AddRelativeTorque(new Vector3(
+                Random.Range(-1, 1),
+                Random.Range(-1, 1),
+                Random.Range(-1, 1)
+                ).normalized * TorqueForce, ForceMode.VelocityChange);
+            //_rb.AddRelativeTorque(transform.right* TorqueForce, ForceMode.VelocityChange);
+            Invoke(nameof(ToggleRagdoll),DashDuration);
+        }
+    }
+    public void ToggleRagdoll()
+    {
+        animator.enabled = true;
+        ragdollBehaviour.ChangeRagdollMode(0);
+    }
     public void OnJump(InputAction.CallbackContext context)
     {
         if (isGrounded)
@@ -158,7 +211,7 @@ public class CharacterController : MonoBehaviour
     {
         var input = context.ReadValue<Vector2>();
         lookAtDirection = Quaternion.LookRotation(new Vector3(input.x, 0, input.y), Vector3.up);
-
+        //lookAtDirection = transform.rotation * Quaternion.Euler(0, input.x, 0);
     }
     public void OnGrabObject(InputAction.CallbackContext context)
     {

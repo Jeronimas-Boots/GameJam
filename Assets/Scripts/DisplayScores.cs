@@ -39,7 +39,7 @@ public class DisplayScores : MonoBehaviour
 
     private void Update()
     {
-        if (_time >= 0) 
+        if (_time > 0 && _PlayerSpawner.GetPlayerCount() == 2) 
         {
             _time -= Time.deltaTime;
             _minutes = Mathf.Floor(_time / 60);
