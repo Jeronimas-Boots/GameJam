@@ -29,7 +29,7 @@ public class CharacterController : MonoBehaviour
     public LayerMask grabbableLayerMask;
     public float ThrowingForce = 10.0f;
 
-    public InputActionReference leftGrab; 
+    public InputActionReference leftGrab;
 
     public List<ObjectSlot> slots;
 
@@ -53,7 +53,7 @@ public class CharacterController : MonoBehaviour
         _fallEffect = transform.GetComponentInChildren<ParticleSystem>();
         _fallEffect.transform.SetParent(null, true);
         _field = GameObject.FindAnyObjectByType<Field>();
-        if(!(_rb = transform.GetComponent<Rigidbody>()))
+        if (!(_rb = transform.GetComponent<Rigidbody>()))
             _rb = transform.AddComponent<Rigidbody>();
 
         _rb.isKinematic = false;
@@ -104,7 +104,7 @@ public class CharacterController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         var input = context.ReadValue<Vector2>();
-        movementDirection = new Vector3(input.x ,0, input.y);
+        movementDirection = new Vector3(input.x, 0, input.y);
 
         bool isWalking = input.sqrMagnitude > 0.01f;
         animator.SetBool("isWalking", isWalking);
@@ -144,7 +144,7 @@ public class CharacterController : MonoBehaviour
         if (!context.started) return;
         int index = context.action.name == leftGrab.action.name ? 1 : 0;
 
-        if(index < slots.Count)
+        if (index < slots.Count)
         {
             if (slots[index].gameObject == null)
             {
@@ -157,46 +157,97 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    private void ThrowObject(int handIndex) 
+    private void ThrowObject(int handIndex)
     {
         var obj = slots[handIndex].gameObject;
+        var rb = obj.GetComponent<Rigidbody>();
+        var cl = obj.GetComponent<Collider>();
 
+        // Use the base 'Joint' class so it easily catches FixedJoint, ConfigurableJoint, etc.
+        var joint = slots[handIndex].transform.GetComponent<Joint>();
+        if (joint != null)
+        {
+            Destroy(joint);
+        }
+        else
+        {
+            // It was a prop, undo the parenting and kinematic state
+            obj.transform.SetParent(null, true);
+            if (cl != null) cl.enabled = true;
+            if (rb != null) rb.isKinematic = false;
+        }
 
-
-        obj.transform.SetParent(null, true);
-        var rb = obj.gameObject.GetComponent<Rigidbody>();
-        var cl = obj.gameObject.GetComponent<Collider>();
-
-        //Check if its a mine then active it
+        // Check if its a mine then active it
         var mine = obj.GetComponent<Mine>();
         if (mine)
         {
             mine.SetMineActive();
             mine.SetOwner(transform.root.gameObject);
-            cl.isTrigger = true;
+            if (cl != null) cl.isTrigger = true;
         }
 
+        if (rb != null)
+        {
+            rb.AddForce(gameObject.transform.forward * ThrowingForce, ForceMode.Force);
+        }
 
-        cl.enabled = true;
-        rb.isKinematic = false;
-        rb.AddForce(gameObject.transform.forward * ThrowingForce, ForceMode.Force);
         slots[handIndex].gameObject = null;
-
     }
+
     private void GrabNearestRigidBodyObject(int handIndex)
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, grabbingRange, grabbableLayerMask);
         foreach (var hit in hits)
         {
+            if (hit.transform.root == transform.root)
+            {
+                continue;
+            }
+
             var rb = hit.gameObject.GetComponent<Rigidbody>();
             var cl = hit.gameObject.GetComponent<Collider>();
             if (rb != null && cl != null)
             {
-                hit.gameObject.transform.position = slots[handIndex].transform.position;
-                hit.gameObject.transform.SetParent(slots[handIndex].transform, true);
                 slots[handIndex].gameObject = hit.gameObject;
-                cl.enabled = false;
-                rb.isKinematic = true;
+
+                // If the root has a CharacterController, treat it as a ragdoll/character
+                if (hit.transform.root.GetComponent<CharacterController>() != null)
+                {
+                    Rigidbody handRb = slots[handIndex].transform.GetComponent<Rigidbody>();
+                    if (handRb == null)
+                    {
+                        handRb = slots[handIndex].transform.gameObject.AddComponent<Rigidbody>();
+                        handRb.isKinematic = true;
+                    }
+
+                    // DO NOT change the hit.gameObject.transform.position here!
+                    // Let the joint connect at the current distance to avoid collider overlap.
+
+                    ConfigurableJoint joint = slots[handIndex].transform.gameObject.AddComponent<ConfigurableJoint>();
+                    joint.connectedBody = rb;
+
+                    // This tells the joint to maintain the distance between the hand and the body part
+                    joint.autoConfigureConnectedAnchor = true;
+
+                    // Lock position (keeps them at arm's length)
+                    joint.xMotion = ConfigurableJointMotion.Locked;
+                    joint.yMotion = ConfigurableJointMotion.Locked;
+                    joint.zMotion = ConfigurableJointMotion.Locked;
+
+                    // Free rotation (allow them to stay upright)
+                    joint.angularXMotion = ConfigurableJointMotion.Free;
+                    joint.angularYMotion = ConfigurableJointMotion.Free;
+                    joint.angularZMotion = ConfigurableJointMotion.Free;
+                }
+                else
+                {
+                    // Otherwise, treat it as a prop/mine
+                    hit.gameObject.transform.position = slots[handIndex].transform.position; // Only teleport props
+                    hit.gameObject.transform.SetParent(slots[handIndex].transform, true);
+                    cl.enabled = false;
+                    rb.isKinematic = true;
+                }
+
                 return;
             }
         }
