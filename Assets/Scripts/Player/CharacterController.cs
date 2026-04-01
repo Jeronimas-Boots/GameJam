@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -184,9 +185,9 @@ public class CharacterController : MonoBehaviour
                 ragdollBehaviour.ChangeRagdollMode(1);
             }
             _rb.AddRelativeTorque(new Vector3(
-                Random.Range(-1, 1),
-                Random.Range(-1, 1),
-                Random.Range(-1, 1)
+                UnityEngine.Random.Range(-1, 1),
+                UnityEngine.Random.Range(-1, 1),
+                UnityEngine.Random.Range(-1, 1)
                 ).normalized * TorqueForce, ForceMode.VelocityChange);
             //_rb.AddRelativeTorque(transform.right* TorqueForce, ForceMode.VelocityChange);
             Invoke(nameof(ToggleRagdoll),DashDuration);

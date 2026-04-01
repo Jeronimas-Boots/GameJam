@@ -6400,6 +6400,7 @@ GameObject:
   - component: {fileID: 6809158565998310221}
   - component: {fileID: 5580186944908643273}
   - component: {fileID: 4483121766863887022}
+  - component: {fileID: 5678932188259706178}
   m_Layer: 7
   m_Name: Hips
   m_TagString: Untagged
@@ -6657,12 +6658,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   ThrowingForce: 1500
+  maxGrabTime: 5
   leftGrab: {fileID: -9022218869052967256, guid: f5a6bf9f9fd10814d9f03c01120811e1, type: 3}
   slots:
   - gameObject: {fileID: 0}
     transform: {fileID: 5083532069688062305}
+    currentGrabTime: 0
   - gameObject: {fileID: 0}
     transform: {fileID: 8311959672836633216}
+    currentGrabTime: 0
   DashForce: 100
   TorqueForce: 10000
   DashCooldown: 1
@@ -6689,19 +6693,7 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -6803,7 +6795,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: f00aebc9-7dc3-465e-ba90-f2dcf0f16b1a
+    m_ActionId: 7f95d353-7829-4e33-b140-9be1d1ba5435
     m_ActionName: 'Player/Dash[/XInputControllerWindows/leftStickPress]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
