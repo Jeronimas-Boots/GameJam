@@ -6649,8 +6649,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
   movementDirection: {x: 0, y: 0, z: 0}
   lookAtDirection: {x: 0, y: 0, z: 0, w: 1}
-  movementSpeed: 40.1
-  maxSpeed: 80.8
+  movementSpeed: 100
+  maxSpeed: 400
   jumpForce: 6868
   grabbingRange: 1
   grabbableLayerMask:

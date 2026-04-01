@@ -18,8 +18,8 @@ public class CharacterController : MonoBehaviour
     public Vector3 movementDirection = Vector3.zero;
     public Quaternion lookAtDirection = Quaternion.identity;
 
-    [Range(.5f, 100.0f)] public float movementSpeed;
-    [Range(.5f, 200.0f)] public float maxSpeed;
+    [Range(.5f, 200.0f)] public float movementSpeed;
+    [Range(.5f, 400.0f)] public float maxSpeed;
     [Range(.5f, 10000.0f)] public float jumpForce;
 
 
