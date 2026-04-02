@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
             {
                 _WinnerText.text = "Red Player Wins!";
             }
-            else if (_score2 > _score1)
+            else if (_score2 < _score1)
             {
                 _WinnerText.text = "Blue Player Wins!";
             }
