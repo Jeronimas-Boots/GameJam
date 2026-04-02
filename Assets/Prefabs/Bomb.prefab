@@ -111,7 +111,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2707413871297094887}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbc86bedf5bf16f49a89c532483466b1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -170,6 +170,4 @@ MonoBehaviour:
   ExplosionForce: 600
   ExplosionRadius: 7
   TimeToExplode: 8
-  _startLerpExplode: 0.0000001
-  _endLerpExplode: 10
   redColor: {r: 1, g: 0, b: 0, a: 0}
