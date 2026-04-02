@@ -6515,9 +6515,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8129732095149574587}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 1.5
   m_LinearDamping: 1
-  m_AngularDamping: 1
+  m_AngularDamping: 0.2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -6648,11 +6648,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71cd2940972fba4a9bbf75dbd82b907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
+  _canMove: 1
   movementDirection: {x: 0, y: 0, z: 0}
   lookAtDirection: {x: 0, y: 0, z: 0, w: 1}
-  movementSpeed: 100
+  movementSpeed: 50
   maxSpeed: 400
-  jumpForce: 4000
+  jumpForce: 5300
   grabbingRange: 1.7
   grabbableLayerMask:
     serializedVersion: 2
@@ -6670,7 +6671,7 @@ MonoBehaviour:
   DashForce: 100
   TorqueForce: 10000
   DashCooldown: 1
-  DashDuration: 1
+  DashDuration: 2
   DashVolume: 0.2
   DashSound: {fileID: 8300000, guid: 9679888df0c30744dbb6780bb460d3ef, type: 3}
   isGrounded: 0

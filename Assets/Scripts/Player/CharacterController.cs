@@ -21,6 +21,7 @@ public class CharacterController : MonoBehaviour
     public bool _canMove = true;
 
     private Rigidbody _rb;
+    private bool IsRagdolling = false;
 
     private RagdollBehaviour ragdollBehaviour;
     public Vector3 movementDirection = Vector3.zero;
@@ -97,7 +98,7 @@ public class CharacterController : MonoBehaviour
                 _rb.linearVelocity = new Vector3(horizontal.x, vel.y, horizontal.z);
             }
 
-            if (_rb != null)
+            if (_rb != null && !IsRagdolling)
             {
                 _rb.MoveRotation(lookAtDirection);
             }
@@ -188,6 +189,7 @@ public class CharacterController : MonoBehaviour
             CanDash = false;
             animator.enabled = false;
             _rb.freezeRotation = false;
+            IsRagdolling = true;
             _rb.AddForce(movementDirection * DashForce,ForceMode.VelocityChange);
             SoundFXManager.Instance.PlaySoundFXClip(DashSound, transform, DashVolume);
             if (ragdollBehaviour)
@@ -199,7 +201,6 @@ public class CharacterController : MonoBehaviour
                 Random.Range(-1, 1),
                 Random.Range(-1, 1)
                 ).normalized * TorqueForce, ForceMode.VelocityChange);
-            //_rb.AddRelativeTorque(transform.right* TorqueForce, ForceMode.VelocityChange);
             Invoke(nameof(ToggleRagdoll),DashDuration);
         }
     }
@@ -208,6 +209,7 @@ public class CharacterController : MonoBehaviour
         animator.enabled = true;
         ragdollBehaviour.ChangeRagdollMode(0);
         _rb.freezeRotation = true;
+        IsRagdolling = false;
     }
     public void OnJump(InputAction.CallbackContext context)
     {
