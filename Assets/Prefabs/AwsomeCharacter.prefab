@@ -6401,7 +6401,7 @@ GameObject:
   - component: {fileID: 5580186944908643273}
   - component: {fileID: 4483121766863887022}
   - component: {fileID: 5678932188259706178}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Hips
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
