@@ -8000,7 +8000,8 @@ PrefabInstance:
       value: StartScreen
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1035943477003418962, guid: b77c51a9fb92e014d9571c2b74c37d4d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77c51a9fb92e014d9571c2b74c37d4d, type: 3}
