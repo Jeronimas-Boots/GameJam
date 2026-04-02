@@ -3371,7 +3371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbb5bca7c99e6a49a2d69afe55a0278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
-  _devMode: 0
+  _devMode: 1
   _transforms:
   - {fileID: 226472134}
   - {fileID: 1586515116}
@@ -3379,6 +3379,11 @@ MonoBehaviour:
   - {r: 0.07035423, g: 0.541676, b: 0.8773585, a: 0}
   - {r: 0.8584906, g: 0.08503916, b: 0.08503916, a: 0}
   _ball: {fileID: 1985907766271524915, guid: 5f7b8e2ca24de3d459a7874dee11dcf5, type: 3}
+  _indicatorBallMaterial: {fileID: 2100000, guid: cb7867a1d3445db4a9d474b991aa74a7, type: 2}
+  _indicator: {fileID: 5193096214925639415, guid: 9264b3582f70a61499669d6c463c39c2, type: 3}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &900792169
 Transform:
   m_ObjectHideFlags: 0

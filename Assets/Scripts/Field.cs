@@ -63,6 +63,7 @@ public class Field : MonoBehaviour
                         x * cube.transform.localScale.x - transform.localScale.x / 2 * cube.transform.localScale.x / _sizeMultiplier + cube.transform.localScale.x / 2,
                         -y * (height/2-height/8),
                         z * cube.transform.localScale.z - transform.localScale.z / 2 * cube.transform.localScale.z / _sizeMultiplier + cube.transform.localScale.z / 2);
+                    cube.layer = 8;
                     _field.Add(cube);
                 }
             }

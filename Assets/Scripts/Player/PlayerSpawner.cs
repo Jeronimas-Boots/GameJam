@@ -7,6 +7,9 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private Transform[] _transforms;
     [SerializeField] private Color[] _colors;
     [SerializeField] private GameObject _ball;
+    [SerializeField] private Material _indicatorBallMaterial;
+    [SerializeField] private GameObject _indicator;
+    [SerializeField] private LayerMask _groundLayer;
     private int _playerCount = 0;
     private bool _gameStarted = false;
     private GameObject _pressAToJoinUI;
@@ -37,6 +40,11 @@ public class PlayerSpawner : MonoBehaviour
             {
                 goal.ball = ball;
             }
+            var indicator = ball.AddComponent<FallIndicator>();
+            indicator.enabled = true;
+            indicator._fallIndicatorMaterial = _indicatorBallMaterial;
+            indicator._fallIndicator = _indicator;
+            indicator.groundLayer = _groundLayer;
 
             _pressAToJoinUI.SetActive(false);
 
