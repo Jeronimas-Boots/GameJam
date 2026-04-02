@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
+    private CameraShake _cameraShake;
     [SerializeField] private Material _blueColorMaterial;
     [SerializeField] private Material _redColorMaterial;
     [SerializeField] private Material _whiteLineMaterial;
@@ -15,11 +16,9 @@ public class Field : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _cameraShake = FindAnyObjectByType<CameraShake>();
         ClearField();
         GenerateField();
-    }
-    private void Update()
-    {
     }
     private void ClearField()
     {
@@ -171,7 +170,7 @@ public class Field : MonoBehaviour
     }
     public bool Explode(Vector3 explosionPosition, float range)
     {
-        FindAnyObjectByType<CameraShake>().Shake(range);
+        _cameraShake.Shake(range);
         bool hasExplodedSomething = false;
         foreach (var obj in _field)
         {

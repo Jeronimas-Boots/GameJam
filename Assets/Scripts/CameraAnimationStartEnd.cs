@@ -25,14 +25,6 @@ public class CameraAnimationStartEnd : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        testTimer += Time.deltaTime;
-        if (testTimer > 10f)
-        {
-            // Test flip
-            StartMove(!_moveUp);
-            testTimer = 0f;
-        }
-
         if (_move)
         {
             Vector3 deltaMove;

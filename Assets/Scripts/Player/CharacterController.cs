@@ -18,6 +18,8 @@ public class ObjectSlot
 }
 public class CharacterController : MonoBehaviour
 {
+    public bool _canMove = true;
+
     private Rigidbody _rb;
 
     private RagdollBehaviour ragdollBehaviour;
@@ -152,6 +154,11 @@ public class CharacterController : MonoBehaviour
     }
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (!_canMove)
+        {
+            movementDirection = new Vector3();
+            return;
+        }
         var input = context.ReadValue<Vector2>();
         movementDirection = new Vector3(input.x, 0, input.y);
 
@@ -171,6 +178,8 @@ public class CharacterController : MonoBehaviour
         _mainBody.transform.rotation = startTransform.rotation;
 
         _mainBody.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
+
+        _canMove = false;
     }
     public void OnDash(InputAction.CallbackContext context)
     {

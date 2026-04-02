@@ -8,9 +8,22 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private Color[] _colors;
     [SerializeField] private GameObject _ball;
     private int _playerCount = 0;
+    private bool _gameStarted = false;
+    private GameObject _pressAToJoinUI;
+
+    public void Awake()
+    {
+        _pressAToJoinUI = GameObject.Find("PressAToJoinUI");
+    }
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
+        if (!_gameStarted)
+        {
+            _gameStarted = true;
+            FindAnyObjectByType<StartScreen>().ClickStart();
+            _pressAToJoinUI.SetActive(true);
+        }
         if (GetPlayerCount() < _transforms.Length)
         {
             playerInput.GetComponent<CharacterController>().InnitializePlayer(_transforms[_playerCount], _colors[_playerCount]);
@@ -23,6 +36,13 @@ public class PlayerSpawner : MonoBehaviour
             foreach (Goal goal in FindObjectsByType<Goal>())
             {
                 goal.ball = ball;
+            }
+
+            _pressAToJoinUI.SetActive(false);
+
+            foreach (var player in FindObjectsByType<CharacterController>())
+            {
+                player._canMove = true;
             }
         }
     }
