@@ -25,18 +25,18 @@ public class GameManager : MonoBehaviour
 
     public void Player1Scored()
     {
+        _score1++;
         UpdateScore(_score1, _Score1Label);
     }
 
     public void Player2Scored()
     {
+        _score2++;
         UpdateScore(_score2, _Score2Label);
     }
 
     public void UpdateScore(int score, TextMeshPro scoreLabel)
     {
-        score++;
-
         string scoreString = score.ToString();
 
         if(score < 10) scoreString = "0" + scoreString;

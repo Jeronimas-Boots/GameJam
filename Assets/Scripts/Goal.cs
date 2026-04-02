@@ -26,6 +26,7 @@ public class Goal : MonoBehaviour
 
             SoundFXManager.Instance.PlaySoundFXClip(_goalSound, transform, 1f);
             ball.GetComponent<MeshRenderer>().enabled = false;
+            ball.transform.position = new Vector3(0, -90, 0);
             _cheererManager.GoalOccurred();
             _scored = true;
         }
